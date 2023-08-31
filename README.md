@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
    - поля **Client id**, **Client secret**, не трогать;
      
-     **Client id** и **Client secret** должен знать фронэнд для направления запроса на сервер.
+     **Client id** и **Client secret** должен знать фронтэнд для направления запроса на сервер.
 
      **ВАЖНО!!!** **Client secret** нужно скопировать себе до сохранения приложения, после создания приложения он будет захеширован.
 
@@ -49,7 +49,7 @@ pip install -r requirements.txt
   
    - в поле **User** выбрать ранее созданного суперюзера из списка;
   
-   - **Client type** установить *Public*;
+   - **Client type** установить *Confidential*;
   
    - **Authorization grant** type установить *Resource owner password-based*;
   
