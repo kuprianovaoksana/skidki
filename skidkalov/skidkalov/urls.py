@@ -24,3 +24,4 @@ urlpatterns = [
     path('', include('backend.urls')),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
 ]
+
