@@ -12,13 +12,19 @@ class Product(models.Model):
     description = models.CharField('Описание товара', max_length=512, blank=True)
     old_price = models.IntegerField('Цена до скидки', null=True)
     current_price = models.IntegerField('Цена со скидкой', )
-    url = models.URLField('URL товара', unique=True, db_index=True, primary_key=True)
+    url = models.URLField('URL товара', unique=True, db_index=True)
     image = models.URLField('URL изображения', blank=True)  # image url
     category = models.CharField('Категория', max_length=32, blank=True)
     brand = models.CharField('Бренд', max_length=32, blank=True)
 
     def set_category(self, category):  # TODO доделать с подбором аналогов
         self.category = category
+
+    def get_discount(self):
+        if self.old_price and self.current_price:
+            return (1 - self.current_price / self.old_price) * 100
+
+        return 0
 
 
 class Request(models.Model):
@@ -35,14 +41,17 @@ class Request(models.Model):
 
     def find_discount(self):
         self.created_at = datetime.now()
-        self.status = True
+        self.status = 'Завершен'
+        self.save()
 
     def cancel_tracker(self):
         self.created_at = datetime.now()
-        self.status = True
+        self.status = 'Отменен'
+        self.save()
 
     def set_product(self, product: Product):
         self.product = product
+        self.save()
 
 
 # регистрация и вход только по email
@@ -56,12 +65,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField('Дата создания', auto_now_add=True)
     is_active = models.BooleanField('Активирован', default=True)  # обязательно
     is_staff = models.BooleanField('Персонал', default=False)  # для админ панели
-    # is_verified = models.BooleanField(_('verified'), default=False)
 
     # заполняемые данные в профиле:
     phone = models.CharField('Номер телефона', max_length=30, blank=True)
-    first_name = models.CharField('Имя', max_length=16, blank=True)
-    last_name = models.CharField('Фамилия', max_length=16, blank=True)
+    first_name = models.CharField('Имя', max_length=16, null=True)
+    last_name = models.CharField('Фамилия', max_length=16, null=True)
     age = models.IntegerField('Возраст', null=True)
     gender = models.CharField('Пол', choices=GENDER, max_length=1, blank=True)
     city = models.CharField('Город', max_length=32, blank=True)
@@ -73,9 +81,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    def change_email(self, new_email):
+        if new_email:
+            self.email = new_email
+            self.username = self.email
+            self.save()
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        unique_together = [['email'], ['username']]
+        unique_together = [['email']]
