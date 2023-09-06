@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import s from './Enter.module.scss';
+import s from './Register.module.scss';
 import Icon from '../../../UI/Icon/Icon';
 import Form from '../../../UI/Form/Form';
 
-const Enter = () => {
+const Register = () => {
 	return (
 		<div className={s.auth}>
 			<div className={s.exit}>
@@ -14,8 +14,8 @@ const Enter = () => {
 				необходимо <br /> <strong>Войти</strong> или
 				<strong> Зарегистрироваться</strong>
 			</p>
-			<h3 className={s.entry}>ВХОД</h3>
-			<Form type="enter" style={s.form} inputStyle={s.form__input} />
+			<h3 className={s.entry}>РЕГИСТРАЦИЯ</h3>
+			<Form type="register" style={s.form} inputStyle={s.form__input} />
 			<div className={s.social}>
 				<p className={s.social__header}>или продолжить через:</p>
 				<div className={s.social__container}>
@@ -50,4 +50,4 @@ const Enter = () => {
 	);
 };
 
-export default Enter;
+export default Register;

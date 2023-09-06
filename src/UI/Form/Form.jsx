@@ -1,35 +1,14 @@
-import s from './Form.module.scss';
-
-import Input from '../Input/Input';
-import { Link } from 'react-router-dom';
-const Form = ({ style, inputStyle }) => {
-	return (
-		<form className={style}>
-			<div className={s.container}>
-				<label className={s.label} htmlFor="">
-					Электронная почта
-				</label>
-				<Input style={inputStyle} placeholder="name@gmail.com" type="mail" />
-			</div>
-			<div className={s.container}>
-				<label className={s.label} htmlFor="">
-					Введите пароль
-				</label>
-
-				<Input
-					style={inputStyle}
-					placeholder="Минимум 5 символов"
-					type="password"
-				/>
-			</div>
-			<Link className={s.link} to="#">
-				Забыли пароль
-			</Link>
-			<button className={s.btn} type="submit">
-				Войти
-			</button>
-		</form>
-	);
+import FormRegister from './FormRegister/FormRegister';
+import FormEntry from './FormEntry/FormEntry';
+const Form = ({ type, style, inputStyle }) => {
+	const showCurrentForm = () => {
+		if (type === 'enter') {
+			return <FormEntry style={style} inputStyle={inputStyle} />;
+		} else if (type === 'register') {
+			return <FormRegister style={style} inputStyle={inputStyle} />;
+		}
+	};
+	return showCurrentForm();
 };
 
 export default Form;

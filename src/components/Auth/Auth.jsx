@@ -1,12 +1,12 @@
 import s from './Auth.module.scss';
-import Enter from './Enter/Enter';
+// import Enter from './Enter/Enter';
+import Register from './Register/Register';
 
 const Auth = () => {
-	const iconsPath = process.env.PUBLIC_URL + '/images/icons/';
-	const getIcon = (icon) => iconsPath + icon + '.svg';
 	return (
 		<div className={s.container}>
-			<Enter getIcon={getIcon} />
+			{/* <Enter  /> */}
+			<Register />
 		</div>
 	);
 };
