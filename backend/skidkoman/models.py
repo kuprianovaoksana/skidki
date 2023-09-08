@@ -83,8 +83,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     # заполняемые данные в профиле:
     phone = models.CharField('Номер телефона', max_length=30, blank=True)
-    first_name = models.CharField('Имя', max_length=16, null=True)
-    last_name = models.CharField('Фамилия', max_length=16, null=True)
+    first_name = models.CharField('Имя', max_length=32, null=True)
+    last_name = models.CharField('Фамилия', max_length=32, null=True)
     age = models.IntegerField('Возраст', null=True)
     gender = models.CharField('Пол', choices=GENDER, max_length=1, blank=True)
     city = models.CharField('Город', max_length=32, blank=True)

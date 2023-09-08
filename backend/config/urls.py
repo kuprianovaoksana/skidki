@@ -15,13 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from .yasg import urlpatterns as yasg_url
+from rest_framework.routers import DefaultRouter
+from skidkoman.api import UserEmailChange
+
+
+router = DefaultRouter()
+router.register('auth/users/me', UserEmailChange)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
-    path('', include('skidkoman.urls')),
+    path('api/v1/', include('skidkoman.urls')),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
 ]
 
+urlpatterns += yasg_url
+urlpatterns += router.urls

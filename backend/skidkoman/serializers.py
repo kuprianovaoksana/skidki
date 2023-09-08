@@ -27,7 +27,7 @@ class RequestSerializer(serializers.ModelSerializer):
         ]
 
 
-class UserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User

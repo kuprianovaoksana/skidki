@@ -41,13 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'skidkoman.apps.SkidkomanConfig',
-
+    'sslserver',
     'djoser',
     'rest_framework.authtoken',
 
     'oauth2_provider',
     'social_django',
     'drf_social_oauth2',
+    'drf_yasg',
 ]
 
 SITE_ID = 1
@@ -164,7 +165,7 @@ DJOSER = {
     'ACTIVATION_URL': 'auth/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
-        'current_user': 'skidkoman.serializers.UserSerializer'
+        'current_user': 'skidkoman.serializers.CustomUserSerializer'
     },
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
