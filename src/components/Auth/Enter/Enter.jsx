@@ -3,11 +3,13 @@ import s from './Enter.module.scss';
 import Icon from '../../../UI/Icon/Icon';
 import Form from '../../../UI/Form/Form';
 
-const Enter = () => {
+const Enter = ({ showEntry }) => {
 	return (
 		<div className={s.auth}>
 			<div className={s.exit}>
-				<Icon style={s.exit__img} iconPath="Exit" alt="exit" />
+				<div onClick={showEntry}>
+					<Icon style={s.exit__img} iconPath="Exit" alt="exit" />
+				</div>
 			</div>
 			<p className={s.condition}>
 				Чтобы отслеживать скидки на товар <br /> и получать уведомления

@@ -3,11 +3,13 @@ import s from './Register.module.scss';
 import Icon from '../../../UI/Icon/Icon';
 import Form from '../../../UI/Form/Form';
 
-const Register = () => {
+const Register = ({ showRegister }) => {
 	return (
 		<div className={s.auth}>
 			<div className={s.exit}>
-				<Icon style={s.exit__img} iconPath="Exit" alt="exit" />
+				<div onClick={showRegister}>
+					<Icon style={s.exit__img} iconPath="Exit" alt="exit" />
+				</div>
 			</div>
 			<p className={s.condition}>
 				Чтобы отслеживать скидки на товар <br /> и получать уведомления
