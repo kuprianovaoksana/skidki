@@ -1,4 +1,4 @@
-"""skidkalov URL Configuration
+"""config URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -21,7 +21,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
-    path('', include('backend.urls')),
+    path('', include('skidkoman.urls')),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
 ]
 

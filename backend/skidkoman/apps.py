@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
 
-class BackendConfig(AppConfig):
+class SkidkomanConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'backend'
+    name = 'skidkoman'
 
     def ready(self):
-        import backend.signals
+        import skidkoman.signals

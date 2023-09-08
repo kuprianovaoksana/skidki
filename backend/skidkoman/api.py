@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from djoser import utils
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework.response import Response
-from skidkalov.settings import EMAIL_CHANGE_CONFIRM_URL
+from config.settings import EMAIL_CHANGE_CONFIRM_URL
 from djoser.serializers import UidAndTokenSerializer
 from django.core.cache import cache
 

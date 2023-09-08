@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.db import models
-from skidkalov import settings
+from config import settings
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from .managers import UserManager
@@ -28,30 +28,45 @@ class Product(models.Model):
 
 
 class Request(models.Model):
+    TYPE = (
+        (0, 'Обо всех изменениях'),
+        (1, 'Об увеличении скидки'),
+        (2, 'О желаемой скидке'),
+    )
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     # товар по какой-то причине исчез из БД, запрос пользователя не должен исчезнуть
-    product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='product')
+    product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='request')
     url = models.URLField('Ссылка для отслеживания')
     price = models.IntegerField('Желаемая цена', null=True)
     discount = models.IntegerField('Желаемая скидка', null=True)
     created_at = models.DateField('Дата создания запроса', auto_now_add=True)
     complited_at = models.DateField('Дата завершения запроса', default=None, null=True)
-    period_date = models.DateField('Время отслеживания', null=True)
+    period_date = models.DurationField('Время отслеживания', null=True)
     status = models.CharField('Статус запроса', max_length=8, default='В работе')
+    email_notification = models.BooleanField('Уведомление на почту', default=False)
+    lk_notification = models.BooleanField('Уведомление в личном кабинете', default=False)
+    notification_type = models.IntegerField('Тип уведомлений', choices=TYPE, default=0)
 
-    def find_discount(self):
+    def end_tracker(self, status):
         self.created_at = datetime.now()
-        self.status = 'Завершен'
+        self.status = status
         self.save()
 
-    def cancel_tracker(self):
-        self.created_at = datetime.now()
-        self.status = 'Отменен'
-        self.save()
+    # def cancel_tracker(self):
+    #     self.created_at = datetime.now()
+    #     self.status = 'Отменен'
+    #     self.save()
 
     def set_product(self, product: Product):
         self.product = product
         self.save()
+
+
+class Notifications(models.Model):
+    request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='notification')
+    text = models.CharField('Сообщение', max_length=256)
+    created_at = models.DateField(auto_now_add=True)
 
 
 # регистрация и вход только по email

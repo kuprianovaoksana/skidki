@@ -7,7 +7,7 @@ source venv/bin/activate
 ```
 3. Установите зависимости:
 ```
-cd skidkalov
+cd backend
 pip install -r requirements.txt
 ```
 
