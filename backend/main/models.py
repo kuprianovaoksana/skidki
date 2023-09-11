@@ -1,30 +1,34 @@
-from datetime import datetime
 from django.db import models
-from config import settings
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
+
+from django_celery_beat.models import PeriodicTask
+
 from .managers import UserManager
+from config import settings
 
 
 class Product(models.Model):
     title = models.CharField('Наименование товара', max_length=64)
-    shop = models.CharField('Интернет-магазин', max_length=32, blank=True)
-    description = models.CharField('Описание товара', max_length=512, blank=True)
-    old_price = models.IntegerField('Цена до скидки', null=True)
-    current_price = models.IntegerField('Цена со скидкой', )
-    url = models.URLField('URL товара', unique=True, db_index=True)
-    image = models.URLField('URL изображения', blank=True)  # image url
-    category = models.CharField('Категория', max_length=32, blank=True)
-    brand = models.CharField('Бренд', max_length=32, blank=True)
-
-    def set_category(self, category):  # TODO доделать с подбором аналогов
-        self.category = category
+    shop = models.CharField('Интернет-магазин', max_length=32, blank=True, null=True)
+    description = models.CharField('Описание товара', max_length=512, blank=True, null=True)
+    old_price = models.CharField('Цена до скидки', max_length=32, blank=True, null=True)
+    current_price = models.CharField('Цена со скидкой', max_length=32)
+    url = models.URLField('URL товара', unique=True, primary_key=True)
+    image = models.URLField('URL изображения', blank=True, null=True)
+    brand = models.CharField('Бренд', max_length=32, blank=True, null=True)
+    click_rate = models.IntegerField(default=0, blank=True, null=True)
 
     def get_discount(self):
         if self.old_price and self.current_price:
             return (1 - self.current_price / self.old_price) * 100
-
         return 0
+
+
+class ProductHistory(models.Model):
+    product_id = models.ForeignKey("Product", on_delete=models.CASCADE)
+    last_updated = models.DateTimeField("Последнее обновление цены", auto_now_add=True)
+    updated_price = models.CharField("Обновленная цена", max_length=32)
 
 
 class Request(models.Model):
@@ -34,33 +38,19 @@ class Request(models.Model):
         (2, 'О желаемой скидке'),
     )
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
-    # товар по какой-то причине исчез из БД, запрос пользователя не должен исчезнуть
-    product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='request')
-    url = models.URLField('Ссылка для отслеживания')
-    price = models.IntegerField('Желаемая цена', null=True)
-    discount = models.IntegerField('Желаемая скидка', null=True)
-    created_at = models.DateField('Дата создания запроса', auto_now_add=True)
-    complited_at = models.DateField('Дата завершения запроса', default=None, null=True)
-    period_date = models.DurationField('Время отслеживания', null=True)
-    status = models.CharField('Статус запроса', max_length=8, default='В работе')
     email_notification = models.BooleanField('Уведомление на почту', default=False)
     lk_notification = models.BooleanField('Уведомление в личном кабинете', default=False)
     notification_type = models.IntegerField('Тип уведомлений', choices=TYPE, default=0)
 
-    def end_tracker(self, status):
-        self.created_at = datetime.now()
-        self.status = status
-        self.save()
-
-    # def cancel_tracker(self):
-    #     self.created_at = datetime.now()
-    #     self.status = 'Отменен'
-    #     self.save()
-
-    def set_product(self, product: Product):
-        self.product = product
-        self.save()
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
+    endpoint = models.URLField('Ссылка для отслеживания')
+    price = models.IntegerField('Желаемая цена', blank=True, null=True)
+    discount = models.IntegerField('Желаемая скидка', blank=True, null=True)
+    created_at = models.DateField('Дата создания запроса', auto_now_add=True)
+    completed_at = models.DateField('Дата завершения запроса', default=None, blank=True, null=True)
+    period_date = models.DateTimeField('Время отслеживания')
+    status = models.CharField('Статус запроса', max_length=8, default='В работе')
+    task = models.OneToOneField(PeriodicTask, null=True, blank=True, on_delete=models.CASCADE)
 
 
 class Notifications(models.Model):
@@ -72,9 +62,9 @@ class Notifications(models.Model):
 # регистрация и вход только по email
 class User(AbstractBaseUser, PermissionsMixin):
     GENDER = (
-                ('M', 'Мужчина'),
-                ('W', 'Женщина')
-            )
+        ('M', 'Мужчина'),
+        ('W', 'Женщина')
+    )
     username = models.CharField('Логин', max_length=150, blank=True, null=True)
     email = models.EmailField('Эл. почта', null=True)
     date_joined = models.DateTimeField('Дата создания', auto_now_add=True)

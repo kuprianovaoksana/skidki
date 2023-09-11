@@ -1,34 +1,27 @@
-from .models import Product, Request
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from djoser.serializers import UidAndTokenSerializer
 
+from rest_framework import serializers
+
+from .models import Request, ProductHistory
 
 User = get_user_model()
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class RequestSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = Request
+        read_only_fields = ("id", "created_at", "task")
         fields = '__all__'
 
 
-class RequestSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
+class ProductHistorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Request
-        fields = [
-            'user',
-            'url',
-            'price',
-            'discount',
-            'period_date',
-        ]
+        model = ProductHistory
+        read_only_fields = ("id", "last_updated")
+        fields = '__all__'
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = [
@@ -43,7 +36,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class UserEmailSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ['email']
