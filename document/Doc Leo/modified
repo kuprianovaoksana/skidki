@@ -7,9 +7,9 @@ This file is needed to remember what has changed.
 \backend\config\celery.py
 \backend\config\__init__.py
 
-\backend\main\viewsets.py # FIXME SETUP END DATETIME
+\backend\main\viewsets.py
 \backend\main\views.py
-\backend\main\tasks.py  # FIXME STOP THE TASK AND OFFER ALTERNATIVE PRODUCT
+\backend\main\tasks.py  # FIXME OFFER ALTERNATIVE PRODUCT
 \backend\main\signals.py
 \backend\main\serializers.py
 \backend\main\models.py
@@ -22,5 +22,5 @@ This file is needed to remember what has changed.
 \backend\djangoscrapy\djangoscrapy\pipelines.py
 \backend\djangoscrapy\djangoscrapy\items.py
 \backend\djangoscrapy\djangoscrapy\apps.py
-\backend\djangoscrapy\djangoscrapy\spiders
+\backend\djangoscrapy\djangoscrapy\spiders  # FIXME ADD EXCEPTION
 \backend\djangoscrapy\djangoscrapy\logic

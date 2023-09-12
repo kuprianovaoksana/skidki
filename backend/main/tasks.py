@@ -1,17 +1,16 @@
 from datetime import datetime
 
 from django.db.models import F, ExpressionWrapper, DateField
-from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
 from django.core import management
 
-from config import settings
-
 from celery import shared_task
+from celery import current_task
+from django_celery_beat.models import PeriodicTask
 
-from .models import Request, Notifications, Product
+from .logic.sender import send_emails
 from .logic.user_request_search import ByUserRequest
 from .logic.update_db import Magic
+from .models import Request, Notifications, Product
 
 
 @shared_task
@@ -75,23 +74,6 @@ def time_end_notification():
         # request.end_tracker('Завершен')
 
 
-def send_emails(email, context, template=None):
-    html_content = render_to_string(
-        template_name=template,
-        context=context,
-    )
-
-    msg = EmailMultiAlternatives(
-        subject=context['subject'],
-        body='',
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[email],
-    )
-
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
-
-
 @shared_task
 def by_week():
     """
@@ -103,18 +85,31 @@ def by_week():
 @shared_task(bind=True)
 def task_monitor(self, request_id):
     """
-    Функция Task_monitor извлекает запрос и объект продукта на основе заданного идентификатора запроса,
-    а затем использует парсер для получения цены продукта и добавляет ее в историю продукта.
+    Функция Task_monitor проверяет, истек ли срок действия задачи, при необходимости отключает ее, обновляет статус
+    связанного запроса и выполняет некоторые операции над объектом продукта.
 
     :param request_id:
-        Параметр request_id — это первичный ключ объекта Request, который мы хотим отслеживать.
-        Он используется для получения конкретного запроса из базы данных
+        Параметр request_id — это идентификатор объекта запроса, который вы хотите отслеживать.
+        Он используется для получения конкретного объекта запроса из базы данных
     """
+    request_obj = Request.objects.get(pk=request_id)
+    task = PeriodicTask.objects.get(name=request_obj.task.name)
+    task_obj = current_task.request
+    format_time = datetime.strptime(task_obj.expires.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+
+    if datetime.now() > format_time:
+        task.enabled = False
+        task.save()
+        Request.objects.filter(pk=request_id).update(completed_at=datetime.now())
+        Request.objects.filter(pk=request_id).update(status=1)
+
     try:
-        request_obj = Request.objects.get(pk=request_id)
         product_obj = Product.objects.get(pk=request_obj.endpoint)
-    except Exception as e:  # TODO DELETE THE TASK.
-        print(str(e), type(e))  # TODO OFFER AN ALTERNATIVE PRODUCT FROM THE BRAND.
+    except Exception as e:  # FIXME STOP THE TASK AND OFFER ALTERNATIVE PRODUCT
+        task.enabled = False
+        task.save()
+
+        print(str(e), type(e))
     else:
         scraper = ByUserRequest(request_obj.endpoint)
         price = scraper.getting_price()

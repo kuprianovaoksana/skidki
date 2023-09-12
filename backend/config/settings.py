@@ -116,13 +116,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'  # DO NOT CHANGE IT.
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False  # DO NOT CHANGE IT.
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -205,4 +205,5 @@ CELERY_RESULT_BACKEND = f'redis://default:P2esA8YJJqVFjdW1kgGxl1jGSqmFgxEd' \
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = "Europe/Moscow"  # DO NOT CHANGE IT.
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True

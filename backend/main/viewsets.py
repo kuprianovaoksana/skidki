@@ -17,69 +17,33 @@ from djoser import utils
 from djoser.serializers import UidAndTokenSerializer
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 
-from .serializers import UserEmailSerializer, ProductHistorySerializer, RequestSerializer
-from .models import Request, ProductHistory
+from .serializers import (ProductSerializer,
+                          ProductHistorySerializer,
+                          RequestSerializer,
+                          NotificationsSerializer,
+                          UserEmailSerializer)
+
+from .models import Product, ProductHistory, Request, Notifications
 from config.settings import EMAIL_CHANGE_CONFIRM_URL
 
 User = get_user_model()
 
 
-class UserEmailChange(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserEmailSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    token_generator = default_token_generator
-
-    def get_serializer_class(self):
-        if self.action == 'change_email_confirm':
-            return UidAndTokenSerializer
-
-        return self.serializer_class
-
-    @action(['post'], detail=False)
-    def change_email(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = self.request.user
-        new_email = request.POST.get('email', None)
-
-        if (user.email == new_email) or (not new_email):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        self.send_email_confirm(user, new_email)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-    @action(['post'], detail=False, permission_classes=[permissions.AllowAny])
-    def change_email_confirm(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.user
-
-        if user:
-            new_email = cache.get(f'user_{user.id}')
-            user.change_email(new_email)
-            return Response(status=status.HTTP_204_NO_CONTENT)
-
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    def send_email_confirm(self, user, new_email):
-        cache_key = f'user_{user.id}'
-        cache.set(cache_key, new_email, timeout=86400)
-        context = {"user": user}
-        to = [new_email]
-        ChangeEmail(self.request, context).send(to)
+class ProductViewSet(viewsets.ModelViewSet):
+    """
+    Класс ProductViewSet — это набор представлений, который обрабатывает операции CRUD для модели Product с
+    использованием сериализатора ProductSerializer.
+    """
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 
-class ChangeEmail(BaseEmailMessage):
-    template_name = "email/change_email.html"
-
-    def get_context_data(self):
-        context = super().get_context_data()
-        user = context.get("user")
-        context["uid"] = utils.encode_uid(user.pk)
-        context["token"] = default_token_generator.make_token(user)
-        context["url"] = EMAIL_CHANGE_CONFIRM_URL.format(**context)
-        return context
+class ProductHistoryViewSet(viewsets.ModelViewSet):
+    """
+    Класс ProductHistoryViewSet — это набор представлений, который обрабатывает операции CRUD для модели ProductHistory.
+    """
+    queryset = ProductHistory.objects.all()
+    serializer_class = ProductHistorySerializer
 
 
 class RequestViewSet(viewsets.ModelViewSet):
@@ -142,9 +106,64 @@ class RequestViewSet(viewsets.ModelViewSet):
         return super().perform_destroy(instance)
 
 
-class ProductHistoryViewSet(viewsets.ModelViewSet):
-    """
-    Класс ProductHistoryViewSet — это набор представлений, который обрабатывает операции CRUD для модели ProductHistory.
-    """
-    queryset = ProductHistory.objects.all()
-    serializer_class = ProductHistorySerializer
+class NotificationsViewSet(viewsets.ModelViewSet):
+    queryset = Notifications.objects.all()
+    serializer_class = NotificationsSerializer
+
+
+class UserEmailChange(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserEmailSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    token_generator = default_token_generator
+
+    def get_serializer_class(self):
+        if self.action == 'change_email_confirm':
+            return UidAndTokenSerializer
+
+        return self.serializer_class
+
+    @action(['post'], detail=False)
+    def change_email(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.request.user
+        new_email = request.POST.get('email', None)
+
+        if (user.email == new_email) or (not new_email):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        self.send_email_confirm(user, new_email)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(['post'], detail=False, permission_classes=[permissions.AllowAny])
+    def change_email_confirm(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.user
+
+        if user:
+            new_email = cache.get(f'user_{user.id}')
+            user.change_email(new_email)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def send_email_confirm(self, user, new_email):
+        cache_key = f'user_{user.id}'
+        cache.set(cache_key, new_email, timeout=86400)
+        context = {"user": user}
+        to = [new_email]
+        ChangeEmail(self.request, context).send(to)
+
+
+class ChangeEmail(BaseEmailMessage):
+    template_name = "email/change_email.html"
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        user = context.get("user")
+        context["uid"] = utils.encode_uid(user.pk)
+        context["token"] = default_token_generator.make_token(user)
+        context["url"] = EMAIL_CHANGE_CONFIRM_URL.format(**context)
+        return context

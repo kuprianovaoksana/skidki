@@ -5,6 +5,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django_celery_beat.models import PeriodicTask
 
 from .managers import UserManager
+
 from config import settings
 
 
@@ -17,7 +18,8 @@ class Product(models.Model):
     url = models.URLField('URL товара', unique=True, primary_key=True)
     image = models.URLField('URL изображения', blank=True, null=True)
     brand = models.CharField('Бренд', max_length=32, blank=True, null=True)
-    click_rate = models.IntegerField(default=0, blank=True, null=True)
+    category = models.CharField('Категория', max_length=32, blank=True, null=True)
+    click_rate = models.IntegerField('Рейтинг кликов', default=0, blank=True, null=True)
 
     def get_discount(self):
         if self.old_price and self.current_price:
@@ -38,18 +40,23 @@ class Request(models.Model):
         (2, 'О желаемой скидке'),
     )
 
+    STATUS = (
+        (0, 'В работе'),
+        (1, 'Успешный'),
+    )
+
     email_notification = models.BooleanField('Уведомление на почту', default=False)
     lk_notification = models.BooleanField('Уведомление в личном кабинете', default=False)
     notification_type = models.IntegerField('Тип уведомлений', choices=TYPE, default=0)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
 
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     endpoint = models.URLField('Ссылка для отслеживания')
     price = models.IntegerField('Желаемая цена', blank=True, null=True)
     discount = models.IntegerField('Желаемая скидка', blank=True, null=True)
     created_at = models.DateField('Дата создания запроса', auto_now_add=True)
-    completed_at = models.DateField('Дата завершения запроса', default=None, blank=True, null=True)
+    completed_at = models.DateTimeField('Дата завершения запроса', default=None, blank=True, null=True)
     period_date = models.DateTimeField('Время отслеживания')
-    status = models.CharField('Статус запроса', max_length=8, default='В работе')
+    status = models.IntegerField('Статус запроса', choices=STATUS, default=0)
     task = models.OneToOneField(PeriodicTask, null=True, blank=True, on_delete=models.CASCADE)
 
 

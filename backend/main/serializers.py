@@ -2,22 +2,33 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from .models import Request, ProductHistory
+from .models import Product, ProductHistory, Request, Notifications
 
 User = get_user_model()
 
 
-class RequestSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Request
-        read_only_fields = ("id", "created_at", "task")
+        model = Product
         fields = '__all__'
 
 
 class ProductHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductHistory
-        read_only_fields = ("id", "last_updated")
+        fields = '__all__'
+
+
+class RequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Request
+        read_only_fields = ("id", "user", "task")
+        fields = '__all__'
+
+
+class NotificationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notifications
         fields = '__all__'
 
 
