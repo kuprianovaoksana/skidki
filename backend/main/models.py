@@ -1,17 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
-
 from django_celery_beat.models import PeriodicTask
-
 from .managers import UserManager
-<<<<<<< HEAD:backend/skidkoman/models.py
 from django.core.validators import ValidationError
 from django.contrib.auth import get_user_model
-
-=======
 from config import settings
->>>>>>> origin/feature-union-api-and-scrapy:backend/main/models.py
 
 
 class Product(models.Model):
@@ -47,12 +41,7 @@ class Request(models.Model):
     email_notification = models.BooleanField('Уведомление на почту', default=False)
     lk_notification = models.BooleanField('Уведомление в личном кабинете', default=False)
     notification_type = models.IntegerField('Тип уведомлений', choices=TYPE, default=0)
-
-<<<<<<< HEAD:backend/skidkoman/models.py
-
-class Notification(models.Model):
-=======
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     endpoint = models.URLField('Ссылка для отслеживания')
     price = models.IntegerField('Желаемая цена', blank=True, null=True)
     discount = models.IntegerField('Желаемая скидка', blank=True, null=True)
@@ -64,7 +53,6 @@ class Notification(models.Model):
 
 
 class Notifications(models.Model):
->>>>>>> origin/feature-union-api-and-scrapy:backend/main/models.py
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='notification')
     text = models.CharField('Сообщение', max_length=256)
     created_at = models.DateField(auto_now_add=True)
@@ -74,15 +62,9 @@ class Notifications(models.Model):
 # регистрация и вход только по email
 class User(AbstractBaseUser, PermissionsMixin):
     GENDER = (
-<<<<<<< HEAD:backend/skidkoman/models.py
-                ('M', 'Мужчина'),
-                ('W', 'Женщина'),
-            )
-=======
         ('M', 'Мужчина'),
         ('W', 'Женщина')
     )
->>>>>>> origin/feature-union-api-and-scrapy:backend/main/models.py
     username = models.CharField('Логин', max_length=150, blank=True, null=True)
     email = models.EmailField('Эл. почта', null=True)  # у VK юзеров нет почты
     date_joined = models.DateTimeField('Дата создания', auto_now_add=True)
