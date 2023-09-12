@@ -37,6 +37,9 @@ pip install -r requirements.txt
 
     `python3 manage.py runsslserver`
      
+7. Запуск celery worker:
+
+    'celery -A config worker -l INFO -B'
 
 ## API Documentation.
 

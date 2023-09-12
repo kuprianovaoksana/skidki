@@ -13,6 +13,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'end_tracker_notification': {
         'task': 'skidkoman.tasks.time_end_notification',
-        'schedule': crontab(minute='0', hour='0'),
+        'schedule': 5#crontab(minute='0', hour='0'),
     },
 }

@@ -30,7 +30,7 @@ r2 = Request.objects.get(id=2)
 r3 = Request.objects.get(id=3)
 r4 = Request.objects.get(id=4)
 
-p1 = Product.objects.get(url='http1')
+p1 = Product.objects.get(id=1)
 p1.current_price = 10000
 p1.save()
 

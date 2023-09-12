@@ -4,6 +4,9 @@ from config import settings
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from .managers import UserManager
+from django.core.validators import ValidationError
+from django.contrib.auth import get_user_model
+
 
 
 class Product(models.Model):
@@ -48,35 +51,22 @@ class Request(models.Model):
     lk_notification = models.BooleanField('Уведомление в личном кабинете', default=False)
     notification_type = models.IntegerField('Тип уведомлений', choices=TYPE, default=0)
 
-    def end_tracker(self, status):
-        self.created_at = datetime.now()
-        self.status = status
-        self.save()
 
-    # def cancel_tracker(self):
-    #     self.created_at = datetime.now()
-    #     self.status = 'Отменен'
-    #     self.save()
-
-    def set_product(self, product: Product):
-        self.product = product
-        self.save()
-
-
-class Notifications(models.Model):
+class Notification(models.Model):
     request = models.ForeignKey('Request', on_delete=models.CASCADE, related_name='notification')
     text = models.CharField('Сообщение', max_length=256)
     created_at = models.DateField(auto_now_add=True)
+    read = models.BooleanField(default=False)
 
 
 # регистрация и вход только по email
 class User(AbstractBaseUser, PermissionsMixin):
     GENDER = (
                 ('M', 'Мужчина'),
-                ('W', 'Женщина')
+                ('W', 'Женщина'),
             )
     username = models.CharField('Логин', max_length=150, blank=True, null=True)
-    email = models.EmailField('Эл. почта', null=True)
+    email = models.EmailField('Эл. почта', null=True)  # у VK юзеров нет почты
     date_joined = models.DateTimeField('Дата создания', auto_now_add=True)
     is_active = models.BooleanField('Активирован', default=True)  # обязательно
     is_staff = models.BooleanField('Персонал', default=False)  # для админ панели
@@ -93,10 +83,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     # будет реализовано в MVP2, пока не используется
     subscription = models.CharField('Тип подписки', max_length=16, default='FREE')
 
-    objects = UserManager()
+    objects = UserManager()  # используется кастомный менеджер юзера
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    USERNAME_FIELD = 'email'  # поле, используемое в качестве логина
+    REQUIRED_FIELDS = ['first_name', 'last_name']  # дополнительные поля при регистрации
 
     def change_email(self, new_email):
         if new_email:
@@ -107,4 +97,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        unique_together = [['email']]
+        unique_together = ['email', 'username']
