@@ -1,23 +1,16 @@
 from datetime import datetime
-
 from django.db.models import F, ExpressionWrapper, DateField
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.core import management
-
 from config import settings
-<<<<<<< HEAD:backend/skidkoman/tasks.py
 from skidkoman.models import Notification
 from .models import Request
 from django.db.models import Q
-=======
-
 from celery import shared_task
-
 from .models import Request, Notifications, Product
 from .logic.user_request_search import ByUserRequest
 from .logic.update_db import Magic
->>>>>>> origin/feature-union-api-and-scrapy:backend/main/tasks.py
 
 
 @shared_task
@@ -76,9 +69,8 @@ def time_end_notification():
                             .select_related('user', 'product')
                             .only('user__email', 'product__title', 'email_notification', 'lk_notification'))
 
-    lks = []
+    notifications = []
 
-<<<<<<< HEAD:backend/skidkoman/tasks.py
     for request in request_notification:
         email = request.user.email if request.email_notification else None
         request_id = request.id if request.lk_notification else None
@@ -97,17 +89,10 @@ def time_end_notification():
             send_email(email, context, template=template_name)
 
         if request_id:
-            lks.append(Notification(request_id=request_id, text=text))
+            notifications.append(Notification(request_id=request_id, text=text))
 
     end_requests.update(complited_at=datetime.now(), status='В работе')
-    Notification.objects.bulk_create(lks)
-=======
-    for request in lk_notification:
-        text = (f'Срок отслеживания товара {request.product.title} подошел к концу. Вы можете продлить срок '
-                f'отслеживания или товар {request.product.title} переместится в Архив.')
-        Notifications.objects.create(request=request, text=text)
-        # request.end_tracker('Завершен')
->>>>>>> origin/feature-union-api-and-scrapy:backend/main/tasks.py
+    Notification.objects.bulk_create(notifications)
 
 
 def send_email(email, context, template=None):

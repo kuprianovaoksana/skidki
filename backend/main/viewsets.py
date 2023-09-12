@@ -1,22 +1,17 @@
 import json
-
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.contrib.auth.tokens import default_token_generator
 from django.db import transaction
-
 from rest_framework import status, viewsets
 from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
-
 from templated_mail.mail import BaseEmailMessage
-
 from djoser import utils
 from djoser.serializers import UidAndTokenSerializer
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
-
 from .serializers import UserEmailSerializer, ProductHistorySerializer, RequestSerializer
 from .models import Request, ProductHistory
 from config.settings import EMAIL_CHANGE_CONFIRM_URL

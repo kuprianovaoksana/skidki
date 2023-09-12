@@ -1,5 +1,4 @@
 import os
-
 from celery import Celery
 from celery.schedules import crontab
 
@@ -12,13 +11,8 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'end_tracker_notification': {
-<<<<<<< HEAD
         'task': 'skidkoman.tasks.time_end_notification',
-        'schedule': 5#crontab(minute='0', hour='0'),
-=======
-        'task': 'main.tasks.time_end_notification',
         'schedule': crontab(minute='0', hour='0'),
->>>>>>> origin/feature-union-api-and-scrapy
     },
 }
 
