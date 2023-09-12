@@ -1,0 +1,26 @@
+This file is needed to remember what has changed.
+
+\skidki\Doc Leo\clean_up.py
+
+\backend\config\urls.py
+\backend\config\settings.py
+\backend\config\celery.py
+\backend\config\__init__.py
+
+\backend\main\viewsets.py # FIXME SETUP END DATETIME
+\backend\main\views.py
+\backend\main\tasks.py  # FIXME STOP THE TASK AND OFFER ALTERNATIVE PRODUCT
+\backend\main\signals.py
+\backend\main\serializers.py
+\backend\main\models.py
+\backend\main\apps.py
+\backend\main\admin.py
+\backend\main\management\commands
+\backend\main\logic
+
+\backend\djangoscrapy\djangoscrapy\settings.py
+\backend\djangoscrapy\djangoscrapy\pipelines.py
+\backend\djangoscrapy\djangoscrapy\items.py
+\backend\djangoscrapy\djangoscrapy\apps.py
+\backend\djangoscrapy\djangoscrapy\spiders
+\backend\djangoscrapy\djangoscrapy\logic

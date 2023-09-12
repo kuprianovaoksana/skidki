@@ -1,0 +1,748 @@
+swagger: '2.0'
+info:
+  title: Snippets API
+  description: Test description
+  termsOfService: https://www.google.com/policies/terms/
+  contact:
+    email: contact@snippets.local
+  license:
+    name: BSD License
+  version: v1
+host: 127.0.0.1:8000
+schemes:
+  - http
+basePath: /auth
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: [ ]
+paths:
+  /convert-token/:
+    post:
+      operationId: convert-token_create
+      summary: Implements an endpoint to convert a provider token to an access token
+      description: |-
+        The endpoint is used in the following flows:
+
+        * Authorization code
+        * Client credentials
+      parameters: [ ]
+      responses:
+        '201':
+          description: ''
+      tags:
+        - convert-token
+    parameters: [ ]
+  /disconnect-backend/:
+    post:
+      operationId: disconnect-backend_create
+      description: An endpoint for disconnect social auth backend providers such as
+        Facebook.
+      parameters: [ ]
+      responses:
+        '201':
+          description: ''
+      tags:
+        - disconnect-backend
+    parameters: [ ]
+  /invalidate-refresh-tokens/:
+    post:
+      operationId: invalidate-refresh-tokens_create
+      description: Invalidate all refresh tokens associated with a client id.
+      parameters: [ ]
+      responses:
+        '201':
+          description: ''
+      tags:
+        - invalidate-refresh-tokens
+    parameters: [ ]
+  /invalidate-sessions/:
+    post:
+      operationId: invalidate-sessions_create
+      description: Delete all access tokens associated with a client id.
+      parameters: [ ]
+      responses:
+        '201':
+          description: ''
+      tags:
+        - invalidate-sessions
+    parameters: [ ]
+  /revoke-token/:
+    post:
+      operationId: revoke-token_create
+      description: Implements an endpoint to revoke access or refresh tokens
+      parameters: [ ]
+      responses:
+        '201':
+          description: ''
+      tags:
+        - revoke-token
+    parameters: [ ]
+  /token/:
+    post:
+      operationId: token_create
+      summary: Implements an endpoint to provide access tokens
+      description: |-
+        The endpoint is used in the following flows:
+
+        * Authorization code
+        * Password
+        * Client credentials
+      parameters: [ ]
+      responses:
+        '201':
+          description: ''
+      tags:
+        - token
+    parameters: [ ]
+  /token/login/:
+    post:
+      operationId: token_login_create
+      description: Use this endpoint to obtain user authentication token.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TokenCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/TokenCreate'
+      tags:
+        - token
+    parameters: [ ]
+  /token/logout/:
+    post:
+      operationId: token_logout_create
+      description: Use this endpoint to logout user (remove user authentication token).
+      parameters: [ ]
+      responses:
+        '201':
+          description: ''
+      tags:
+        - token
+    parameters: [ ]
+  /users/:
+    get:
+      operationId: users_list
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+      tags:
+        - users
+    post:
+      operationId: users_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserCreatePasswordRetype'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserCreatePasswordRetype'
+      tags:
+        - users
+    parameters: [ ]
+  /users/activation/:
+    post:
+      operationId: users_activation
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Activation'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Activation'
+      tags:
+        - users
+    parameters: [ ]
+  /users/me/:
+    get:
+      operationId: users_me_read
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CustomUser'
+      tags:
+        - users
+    put:
+      operationId: users_me_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CustomUser'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CustomUser'
+      tags:
+        - users
+    patch:
+      operationId: users_me_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CustomUser'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CustomUser'
+      tags:
+        - users
+    delete:
+      operationId: users_me_delete
+      description: ''
+      parameters: [ ]
+      responses:
+        '204':
+          description: ''
+      tags:
+        - users
+    parameters: [ ]
+  /users/me/change_email/:
+    post:
+      operationId: users_me_change_email
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserEmail'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserEmail'
+      tags:
+        - users
+    parameters: [ ]
+  /users/me/change_email_confirm/:
+    post:
+      operationId: users_me_change_email_confirm
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UidAndToken'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/UidAndToken'
+      tags:
+        - users
+    parameters: [ ]
+  /users/me/{id}/:
+    get:
+      operationId: users_me_read
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserEmail'
+      tags:
+        - users
+    put:
+      operationId: users_me_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserEmail'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserEmail'
+      tags:
+        - users
+    patch:
+      operationId: users_me_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserEmail'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserEmail'
+      tags:
+        - users
+    delete:
+      operationId: users_me_delete
+      description: ''
+      parameters: [ ]
+      responses:
+        '204':
+          description: ''
+      tags:
+        - users
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Пользователь.
+        required: true
+        type: integer
+  /users/resend_activation/:
+    post:
+      operationId: users_resend_activation
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SendEmailReset'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/SendEmailReset'
+      tags:
+        - users
+    parameters: [ ]
+  /users/reset_email/:
+    post:
+      operationId: users_reset_username
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SendEmailReset'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/SendEmailReset'
+      tags:
+        - users
+    parameters: [ ]
+  /users/reset_email_confirm/:
+    post:
+      operationId: users_reset_username_confirm
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UsernameResetConfirm'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/UsernameResetConfirm'
+      tags:
+        - users
+    parameters: [ ]
+  /users/reset_password/:
+    post:
+      operationId: users_reset_password
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SendEmailReset'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/SendEmailReset'
+      tags:
+        - users
+    parameters: [ ]
+  /users/reset_password_confirm/:
+    post:
+      operationId: users_reset_password_confirm
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PasswordResetConfirm'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/PasswordResetConfirm'
+      tags:
+        - users
+    parameters: [ ]
+  /users/set_email/:
+    post:
+      operationId: users_set_username
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SetUsername'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/SetUsername'
+      tags:
+        - users
+    parameters: [ ]
+  /users/set_password/:
+    post:
+      operationId: users_set_password
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SetPasswordRetype'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/SetPasswordRetype'
+      tags:
+        - users
+    parameters: [ ]
+  /users/{id}/:
+    get:
+      operationId: users_read
+      description: ''
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    put:
+      operationId: users_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    patch:
+      operationId: users_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+        - users
+    delete:
+      operationId: users_delete
+      description: ''
+      parameters: [ ]
+      responses:
+        '204':
+          description: ''
+      tags:
+        - users
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Пользователь.
+        required: true
+        type: integer
+definitions:
+  TokenCreate:
+    type: object
+    properties:
+      password:
+        title: Password
+        type: string
+        minLength: 1
+      email:
+        title: Email
+        type: string
+        minLength: 1
+  User:
+    type: object
+    properties:
+      first_name:
+        title: Имя
+        type: string
+        maxLength: 32
+        minLength: 1
+        x-nullable: true
+      last_name:
+        title: Фамилия
+        type: string
+        maxLength: 32
+        minLength: 1
+        x-nullable: true
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      email:
+        title: Эл. почта
+        type: string
+        format: email
+        readOnly: true
+        minLength: 1
+        x-nullable: true
+  UserCreatePasswordRetype:
+    required:
+      - email
+      - password
+      - re_password
+    type: object
+    properties:
+      first_name:
+        title: Имя
+        type: string
+        maxLength: 32
+        minLength: 1
+        x-nullable: true
+      last_name:
+        title: Фамилия
+        type: string
+        maxLength: 32
+        minLength: 1
+        x-nullable: true
+      email:
+        title: Эл. почта
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+        x-nullable: true
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      password:
+        title: Password
+        type: string
+        minLength: 1
+      re_password:
+        title: Re password
+        type: string
+        minLength: 1
+  Activation:
+    required:
+      - uid
+      - token
+    type: object
+    properties:
+      uid:
+        title: Uid
+        type: string
+        minLength: 1
+      token:
+        title: Token
+        type: string
+        minLength: 1
+  CustomUser:
+    type: object
+    properties:
+      phone:
+        title: Номер телефона
+        type: string
+        maxLength: 30
+      first_name:
+        title: Имя
+        type: string
+        maxLength: 32
+        minLength: 1
+        x-nullable: true
+      last_name:
+        title: Фамилия
+        type: string
+        maxLength: 32
+        minLength: 1
+        x-nullable: true
+      age:
+        title: Возраст
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+        x-nullable: true
+      gender:
+        title: Пол
+        type: string
+        enum:
+          - M
+          - W
+      city:
+        title: Город
+        type: string
+        maxLength: 32
+      description_user:
+        title: О себе
+        type: string
+        maxLength: 512
+  UserEmail:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Эл. почта
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+        x-nullable: true
+  UidAndToken:
+    required:
+      - uid
+      - token
+    type: object
+    properties:
+      uid:
+        title: Uid
+        type: string
+        minLength: 1
+      token:
+        title: Token
+        type: string
+        minLength: 1
+  SendEmailReset:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+  UsernameResetConfirm:
+    required:
+      - new_email
+    type: object
+    properties:
+      new_email:
+        title: Эл. почта
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+        x-nullable: true
+  PasswordResetConfirm:
+    required:
+      - uid
+      - token
+      - new_password
+    type: object
+    properties:
+      uid:
+        title: Uid
+        type: string
+        minLength: 1
+      token:
+        title: Token
+        type: string
+        minLength: 1
+      new_password:
+        title: New password
+        type: string
+        minLength: 1
+  SetUsername:
+    required:
+      - current_password
+      - new_email
+    type: object
+    properties:
+      current_password:
+        title: Current password
+        type: string
+        minLength: 1
+      new_email:
+        title: Эл. почта
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+        x-nullable: true
+  SetPasswordRetype:
+    required:
+      - new_password
+      - re_new_password
+      - current_password
+    type: object
+    properties:
+      new_password:
+        title: New password
+        type: string
+        minLength: 1
+      re_new_password:
+        title: Re new password
+        type: string
+        minLength: 1
+      current_password:
+        title: Current password
+        type: string
+        minLength: 1
