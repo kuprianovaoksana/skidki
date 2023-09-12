@@ -1,12 +1,23 @@
 from datetime import datetime
+
 from django.db.models import F, ExpressionWrapper, DateField
 from django.template.loader import render_to_string
-from celery import shared_task
 from django.core.mail import EmailMultiAlternatives
+from django.core import management
+
 from config import settings
+<<<<<<< HEAD:backend/skidkoman/tasks.py
 from skidkoman.models import Notification
 from .models import Request
 from django.db.models import Q
+=======
+
+from celery import shared_task
+
+from .models import Request, Notifications, Product
+from .logic.user_request_search import ByUserRequest
+from .logic.update_db import Magic
+>>>>>>> origin/feature-union-api-and-scrapy:backend/main/tasks.py
 
 
 @shared_task
@@ -67,6 +78,7 @@ def time_end_notification():
 
     lks = []
 
+<<<<<<< HEAD:backend/skidkoman/tasks.py
     for request in request_notification:
         email = request.user.email if request.email_notification else None
         request_id = request.id if request.lk_notification else None
@@ -89,6 +101,13 @@ def time_end_notification():
 
     end_requests.update(complited_at=datetime.now(), status='В работе')
     Notification.objects.bulk_create(lks)
+=======
+    for request in lk_notification:
+        text = (f'Срок отслеживания товара {request.product.title} подошел к концу. Вы можете продлить срок '
+                f'отслеживания или товар {request.product.title} переместится в Архив.')
+        Notifications.objects.create(request=request, text=text)
+        # request.end_tracker('Завершен')
+>>>>>>> origin/feature-union-api-and-scrapy:backend/main/tasks.py
 
 
 def send_email(email, context, template=None):
@@ -107,3 +126,33 @@ def send_email(email, context, template=None):
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
+
+@shared_task
+def by_week():
+    """
+    Функция `by_week` вызывает команду управления для запуска паука.
+    """
+    management.call_command('runspider')
+
+
+@shared_task(bind=True)
+def task_monitor(self, request_id):
+    """
+    Функция Task_monitor извлекает запрос и объект продукта на основе заданного идентификатора запроса,
+    а затем использует парсер для получения цены продукта и добавляет ее в историю продукта.
+
+    :param request_id:
+        Параметр request_id — это первичный ключ объекта Request, который мы хотим отслеживать.
+        Он используется для получения конкретного запроса из базы данных
+    """
+    try:
+        request_obj = Request.objects.get(pk=request_id)
+        product_obj = Product.objects.get(pk=request_obj.endpoint)
+    except Exception as e:  # TODO DELETE THE TASK.
+        print(str(e), type(e))  # TODO OFFER AN ALTERNATIVE PRODUCT FROM THE BRAND.
+    else:
+        scraper = ByUserRequest(request_obj.endpoint)
+        price = scraper.getting_price()
+
+        abracadabra = Magic(price, product_obj)
+        abracadabra.add_product_history()
