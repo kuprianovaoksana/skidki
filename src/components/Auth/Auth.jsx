@@ -1,4 +1,4 @@
-import s from './Auth.module.scss';
+import Popup from '../../UI/Popup/Popup';
 import Enter from './Enter/Enter';
 import Register from './Register/Register';
 
@@ -6,22 +6,16 @@ const Auth = ({ showEntry, showRegister, isShowEntry, isShowRegister }) => {
 	const showAuth = () => {
 		if (isShowEntry) {
 			return (
-				<div
-					style={{ display: isShowEntry ? 'absolute' : 'none' }}
-					className={s.container}
-				>
+				<Popup isShow={isShowEntry}>
 					<Enter showEntry={showEntry} />
-				</div>
+				</Popup>
 			);
 		}
 		if (isShowRegister) {
 			return (
-				<div
-					style={{ display: isShowRegister ? 'absolute' : 'none' }}
-					className={s.container}
-				>
+				<Popup isShow={isShowRegister}>
 					<Register showRegister={showRegister} />
-				</div>
+				</Popup>
 			);
 		}
 	};
