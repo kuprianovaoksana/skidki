@@ -93,21 +93,25 @@ def task_monitor(self, request_id):
         Он используется для получения конкретного объекта запроса из базы данных
     """
     request_obj = Request.objects.get(pk=request_id)
-    task = PeriodicTask.objects.get(name=request_obj.task.name)
-    task_obj = current_task.request
-    format_time = datetime.strptime(task_obj.expires.replace("T", " "), '%Y-%m-%d %H:%M:%S')
 
-    if datetime.now() > format_time:
-        task.enabled = False
-        task.save()
-        Request.objects.filter(pk=request_id).update(completed_at=datetime.now())
-        Request.objects.filter(pk=request_id).update(status=1)
+    task_action = PeriodicTask.objects.get(name=request_obj.task.name)  # THIS OBJECT IS TO STOP THE TASK.
+
+    task_time = current_task.request  # THIS OBJECT IS FOR CACHE EXPIRY TIME.
+
+    formatted_time = datetime.strptime(task_time.expires.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+
+    if datetime.now() > formatted_time:
+        task_action.enabled = False
+        task_action.save()
+        Request.objects.filter(pk=request_id).update(completed_at=datetime.now(), status=1)
 
     try:
         product_obj = Product.objects.get(pk=request_obj.endpoint)
-    except Exception as e:  # FIXME STOP THE TASK AND OFFER ALTERNATIVE PRODUCT
-        task.enabled = False
-        task.save()
+    except Exception as e:  # FIXME OFFER ALTERNATIVE PRODUCT
+        task_action.enabled = False
+        task_action.save()
+
+        Request.objects.filter(pk=request_id).update(completed_at=datetime.now(), status=2)
 
         print(str(e), type(e))
     else:
