@@ -1,0 +1,2 @@
+[2023-09-13 18:16:40,720], [ERROR], [Internal Server Error: /request/], [C:\Users\root\Desktop\skidki\venv\lib\site-packages\django\utils\log.py], [None]
+[2023-09-13 18:16:40,720], [ERROR], ["POST /request/ HTTP/1.1" 500 12001], [C:\Users\root\Desktop\skidki\venv\lib\site-packages\django\core\servers\basehttp.py], [None]

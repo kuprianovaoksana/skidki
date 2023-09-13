@@ -42,13 +42,14 @@ class Request(models.Model):
 
     STATUS = (
         (0, 'В работе'),
-        (1, 'Успешный'),
+        (1, 'Выполнен'),
+        (2, 'Ошибка в URL'),
     )
 
     email_notification = models.BooleanField('Уведомление на почту', default=False)
     lk_notification = models.BooleanField('Уведомление в личном кабинете', default=False)
     notification_type = models.IntegerField('Тип уведомлений', choices=TYPE, default=0)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
 
     endpoint = models.URLField('Ссылка для отслеживания')
     price = models.IntegerField('Желаемая цена', blank=True, null=True)
