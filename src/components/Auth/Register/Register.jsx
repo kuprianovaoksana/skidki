@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import s from './Register.module.scss';
-import Icon from '../../../UI/Icon/Icon';
-import Form from '../../../UI/Form/Form';
+import Icon from '../../ui/Icon/Icon';
+import Form from '../../ui/Form/Form';
 
 const Register = () => {
 	return (

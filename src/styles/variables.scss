@@ -1,0 +1,87 @@
+//colors
+$colorWhite: #FFFFFF;
+$colorBeige: #FFF3DB;
+$colorBlue: #0C9EF9;
+$colorOrange: #FCB209;
+$colorPink: #F74689;
+$colorBlueDark: #5070E1;
+$colorVioletHighlight: #CBB9FF;
+$colorVioletLight: #E4D4FF;
+$colorVioletMenu: #6929F2;
+$colorGreen: #45BF86;
+$colorGreenLight: #CDF2E1;
+$colorGrey: #D9D9D9;
+$colorButton: #361D7E;
+$colorTextBlack: #000000;
+$colorTextWhite:#FFFFFF;
+$colorTextSecondary: #352C32;
+$colorTextGrey: #00000080;
+$colorTextGreyLight: #9D9D9D;
+$colorTextDiscout: #00000073;
+$colorTextBlue: #1D19DE;
+$colorTextPlaceholder: #8C8C8C;
+$colorBackgroundFill: #D9D9D9D9;
+$colorInitial: #ECEFF5;
+$gradientMainButton: linear-gradient(206deg, #FFE415 15.53%, #FD8201 97.44%);
+$gradientMain:linear-gradient(180deg, #FFF 14.16%, #ECEFF5 18.3%);
+$colorLightgray: lightgray 50%;
+$borderGrey: #B5B5B9;
+
+//shadow
+$shadow-0-10: 0px 0px 0px 0px rgba(0, 0, 0, 0.10);
+$shadow-y1-b1-10: 0px 1px 1px 0px rgba(0, 0, 0, 0.10);
+$shadow-y3-b3-9: 0px 3px 3px 0px rgba(0, 0, 0, 0.09);
+$shadow-y6-b4-5: 0px 6px 4px 0px rgba(0, 0, 0, 0.05);
+$shadow-y11-b4-1: 0px 11px 4px 0px rgba(0, 0, 0, 0.01);
+$shadow-y17-b5-0: 0px 17px 5px 0px rgba(0, 0, 0, 0.00);
+
+@mixin fontRoboto($color, $size, $height, $weight: 400){
+	font-family: 'Roboto-Regular', Arial, Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: $size;
+	line-height: $height;
+	font-weight: $weight;
+	color: $color;
+}
+@mixin fontRubik($color, $size, $height, $weight: 400){
+	font-family: 'Rubik-Regular', Arial, Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: $size;
+	line-height: $height;
+	font-weight: $weight;
+	color: $color;
+}
+@mixin fontInter($color, $size, $height, $weight: 400){
+	font-family: 'Inter-Regular', Arial, Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: $size;
+	line-height: $height;
+	font-weight: $weight;
+	color: $color;
+}
+
+@mixin width-height($width, $height: $width){
+	width: $width;
+	height: $height;
+}
+
+@mixin borderStyle ($border, $borderRadius){
+	border: $border;
+	border-radius: $borderRadius;
+}
+
+@mixin flex-grid ($display, $direction, $justify, $align){
+	display: $display;
+	flex-direction: $direction;
+	justify-content: $justify;
+	align-items: $align;
+}
+
+@mixin blockCenter {
+	display: flex;
+	flex-direction: center;
+	justify-content: center;
+}
+@mixin textCenter {
+	display: flex;
+	flex-direction: center;
+	justify-content: center;
+	align-items: center;
+}

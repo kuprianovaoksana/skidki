@@ -1,13 +1,13 @@
-import './App.css';
+import './App.scss';
 import {Routes, Route} from 'react-router-dom';
-import {Layout} from './pages/Homepage/Layout/Layout';
-import {Homepage} from './pages/Homepage/Homepage/Homepage';
-import {NotFound} from './pages/NotFound/NotFound';
-import {Catalog} from './pages/Catalog/Catalog';
-import {Entrance} from './pages/Entrance/Entrance';
-import {MyDiscount} from './pages/MyDiscount/MyDiscount';
-import {Notifications} from './pages/Notifications/Notifications';
-import {Settings} from './pages/Settings/Settings';
+import {Layout} from '../pages/Homepage/Layout/Layout';
+import {Homepage} from '../pages/Homepage/Homepage/Homepage';
+import {NotFound} from '../pages/NotFound/NotFound';
+import {Catalog} from '../pages/Catalog/Catalog';
+import {Entrance} from '../pages/Entrance/Entrance';
+import {MyDiscount} from '../pages/MyDiscount/MyDiscount';
+import {Notifications} from '../pages/Notifications/Notifications';
+import {Settings} from '../pages/Settings/Settings';
 
 
 
