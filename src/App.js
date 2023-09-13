@@ -7,6 +7,8 @@ import {Catalog} from './pages/Catalog/Catalog';
 import {Entrance} from './pages/Entrance/Entrance';
 import {MyDiscount} from './pages/MyDiscount/MyDiscount';
 import {Notifications} from './pages/Notifications/Notifications';
+import {Settings} from './pages/Settings/Settings';
+
 
 
 
@@ -23,6 +25,7 @@ function App() {
           <Route path='/entrance' element={<Entrance/>}/>
           <Route path='/discount' element={<MyDiscount/>}/>
           <Route path='/notifications' element={<Notifications/>}/>
+          <Route path='/settings' element={<Settings/>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>
       </Routes>

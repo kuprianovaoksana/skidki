@@ -7,7 +7,7 @@ import Auth from '../../../components/Auth/Auth';
 const Layout = () => {
 	return (
 		<div className={css.wrapper}>
-			<Auth />
+			{/* <Auth /> */}
 			<Header />
 			<main>
 				<Outlet />
