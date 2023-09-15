@@ -99,12 +99,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {  # FIXME FOR SERVER
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'pGhLwxSNFRavhCtYVwMS',
-        'HOST': 'containers-us-west-178.railway.app',
-        'PORT': '6127',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'djangodb',
+        'USER': 'django',
+        'PASSWORD': 'w8476crbxi736rx3o8rxfzd67gew76fr',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -179,7 +179,7 @@ DJOSER = {
 
 EMAIL_CHANGE_CONFIRM_URL = 'auth/change/email/{uid}/{token}'
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  # TODO для разработки
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST = 'smtp.yandex.ru'
