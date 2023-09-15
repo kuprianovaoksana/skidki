@@ -3,10 +3,8 @@ import re
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from ..logic.update_db import DataUpdate
-from ..logic.expectation import MainExpectation
 
 
-# Я не буду объяснять, что делает этот класс, это долгая история.
 class SunlightSpider(CrawlSpider):
     name = "sunlight"
     allowed_domains = ["sunlight.net"]
@@ -29,29 +27,40 @@ class SunlightSpider(CrawlSpider):
             # Checking if the last four characters of the URL are equal to "html".
             # This is used to filter out URLs that do not end with ".html" and only process those that do.
             if str(response.url)[-4:] == "html":
-                support = DataUpdate(
-                    title=MainExpectation.binoculars(
-                        response.css("h1.supreme-product-card__about-title::text").get().strip()),
+                try:
+                    title = response.css(
+                        "h1.supreme-product-card__about-title::text"
+                    ).get().strip()
 
-                    current_price=MainExpectation.binoculars(response.css(
-                        "div.supreme-product-card__price-discount-price::text").get().strip().encode("ascii",
-                                                                                                     "ignore").decode()),
-                    url=MainExpectation.binoculars(response.url),
+                    current_price = response.css(
+                        "div.supreme-product-card__price-discount-price::text"
+                    ).get().strip().encode("ascii", "ignore").decode(),
 
-                    shop=MainExpectation.binoculars(
-                        response.css("div.footer-info-line__title span::text").get().strip()),
+                    url = response.url
 
-                    description=MainExpectation.binoculars(
-                        " ".join(response.css("li > p.supreme-product-card__description::text").get().split())),
+                    shop = response.css(
+                        "div.footer-info-line__title span::text"
+                    ).get().strip()
 
-                    old_price=MainExpectation.binoculars(
-                        response.css("div.supreme-product-card__price-old::text").get().strip().encode("ascii",
-                                                                                                       "ignore").decode()),
-                    image=MainExpectation.binoculars(
-                        response.css("img.supreme-product-card-slider-pagination__img::attr(src)").get()),
+                    description = " ".join(response.css(
+                        "li > p.supreme-product-card__description::text"
+                    ).get().split())
 
-                    brand=MainExpectation.binoculars(
-                        response.css("a.supreme-product-card-description__item-text::text").get().strip())
-                )
-                support.add_product()
-                yield {"url": response.url}
+                    old_price = response.css(
+                        "div.supreme-product-card__price-old::text"
+                    ).get().strip().encode("ascii", "ignore").decode()
+
+                    image = response.css(
+                        "img.supreme-product-card-slider-pagination__img::attr(src)"
+                    ).get()
+
+                    brand = response.css(
+                        "a.supreme-product-card-description__item-text::text"
+                    ).get().strip()
+                except Exception as error:
+                    print(f"AttributeError in {error} with {response.url}")
+                else:
+                    support = DataUpdate(title, current_price, url, shop, description, old_price, image, brand)
+                    support.add_product()
+
+            yield {"url": response.url}

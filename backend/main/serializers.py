@@ -20,9 +20,11 @@ class ProductHistorySerializer(serializers.ModelSerializer):
 
 
 class RequestSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Request
-        read_only_fields = ("id", "user", "task")
+        read_only_fields = ("user", "task")
         fields = '__all__'
 
 

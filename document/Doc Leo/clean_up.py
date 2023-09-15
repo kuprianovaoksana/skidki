@@ -1,3 +1,5 @@
+import time
+
 import redis
 
 red = redis.Redis(
@@ -12,4 +14,5 @@ red = redis.Redis(
 # py -i .\clean_up.py
 
 for clean in range(5):
+    time.sleep(3)
     print(red.flushdb())

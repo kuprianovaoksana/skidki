@@ -6,18 +6,14 @@ from rest_framework import permissions
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view as swagger_get_schema_view
 
-from main.viewsets import (ProductViewSet,
-                           ProductHistoryViewSet,
-                           RequestViewSet,
-                           NotificationsViewSet,
-                           UserEmailChange)
+from main import viewsets
 
 router = routers.DefaultRouter()
-router.register(r"product", ProductViewSet)
-router.register(r"history", ProductHistoryViewSet)
-router.register(r"request", RequestViewSet)
-router.register(r"notifications", NotificationsViewSet)
-router.register(r"auth/users/me", UserEmailChange)
+router.register(r"product", viewsets.ProductViewSet)
+router.register(r"history", viewsets.ProductHistoryViewSet)
+router.register(r"request", viewsets.RequestViewSet)
+router.register(r"notify", viewsets.NotificationsViewSet)
+router.register(r"auth/users/me", viewsets.UserEmailChange)
 
 schema_view = swagger_get_schema_view(
     openapi.Info(
@@ -35,13 +31,13 @@ schema_view = swagger_get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', include(router.urls)),
+    path('api-', include(router.urls)),
 
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
 
-    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

@@ -4,9 +4,9 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.contrib.auth.tokens import default_token_generator
 from django.db import transaction
+from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework import status, viewsets
-from rest_framework import permissions
+from rest_framework import status, viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
@@ -30,29 +30,49 @@ User = get_user_model()
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    """
-    Класс ProductViewSet — это набор представлений, который обрабатывает операции CRUD для модели Product с
-    использованием сериализатора ProductSerializer.
-    """
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [
+        'title',
+        'shop',
+        'old_price',
+        'current_price',
+        'url',
+        'brand',
+        'category',
+        'click_rate',
+    ]
 
 
 class ProductHistoryViewSet(viewsets.ModelViewSet):
-    """
-    Класс ProductHistoryViewSet — это набор представлений, который обрабатывает операции CRUD для модели ProductHistory.
-    """
+    permission_classes = [permissions.IsAuthenticated]
     queryset = ProductHistory.objects.all()
     serializer_class = ProductHistorySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [
+        'product_id',
+        'last_updated',
+        'updated_price',
+    ]
 
 
 class RequestViewSet(viewsets.ModelViewSet):
-    """
-    Класс RequestViewSet — это набор представлений, который обрабатывает операции CRUD для модели Request,
-    а также создает периодическую задачу для мониторинга запросов.
-    """
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Request.objects.all()
     serializer_class = RequestSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [
+        'user',
+        'endpoint',
+        'price',
+        'discount',
+        'created_at',
+        'completed_at',
+        'period_date',
+        'status',
+    ]
 
     def perform_create(self, serializer):
         """
@@ -73,7 +93,7 @@ class RequestViewSet(viewsets.ModelViewSet):
                     # Параметр every=1 в объекте IntervalSchedule определяет частоту интервала. В данном случае ему
                     # присвоено значение 1, что означает, что периодическая задача будет запускаться каждую единицу
                     # указанного периода (например, каждую 1 секунду, каждый 1 день и т.д.).
-                    every=5,  # Enter a number 5 or more here to check it in seconds.
+                    every=30,  # Enter a number 5 or more here to check it in seconds.
                     period=IntervalSchedule.SECONDS,  # FOR TESTING USE "SECONDS" IN REAL WORK "DAYS".
                 )
 
@@ -82,7 +102,7 @@ class RequestViewSet(viewsets.ModelViewSet):
                     name=f"Request: {instance.endpoint}",
                     task="main.tasks.task_monitor",
                     kwargs=json.dumps({"request_id": instance.id}),
-                    expires=instance.period_date  # FIXME SETUP END DATETIME
+                    expires=instance.period_date
                 )
                 instance.task = task
                 instance.save()
@@ -107,11 +127,21 @@ class RequestViewSet(viewsets.ModelViewSet):
 
 
 class NotificationsViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Notifications.objects.all()
     serializer_class = NotificationsSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [
+        'request',
+        'created_at',
+    ]
 
 
 class UserEmailChange(viewsets.ModelViewSet):
+    """
+    Класс UserEmailChange — это набор представлений, который позволяет аутентифицированным пользователям
+    изменять свой адрес электронной почты и подтверждать изменение посредством проверки электронной почты.
+    """
     queryset = User.objects.all()
     serializer_class = UserEmailSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -158,6 +188,10 @@ class UserEmailChange(viewsets.ModelViewSet):
 
 
 class ChangeEmail(BaseEmailMessage):
+    """
+    Класс ChangeEmail используется для генерации контекстных данных для шаблона электронной почты для изменения адреса
+    электронной почты пользователя.
+    """
     template_name = "email/change_email.html"
 
     def get_context_data(self):

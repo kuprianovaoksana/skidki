@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'rest_framework.authtoken',
     'django_celery_beat',
+    'django_filters',
 
     'djangoscrapy',
     'main',
@@ -142,9 +143,11 @@ REST_FRAMEWORK = {
         'drf_social_oauth2.authentication.SocialAuthentication',
     ),
 
-    # 'DEFAULT_PERMISSION_CLASSES': [ # TODO UNCOMMENT THIS FOR YOUR REQUIREMENTS
-    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    # ]
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
 DJOSER = {

@@ -107,7 +107,7 @@ def task_monitor(self, request_id):
 
     try:
         product_obj = Product.objects.get(pk=request_obj.endpoint)
-    except Exception as e:  # FIXME OFFER ALTERNATIVE PRODUCT
+    except Exception as e:
         task_action.enabled = False
         task_action.save()
 
