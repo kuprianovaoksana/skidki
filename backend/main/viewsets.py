@@ -155,6 +155,10 @@ class UserEmailChange(viewsets.ModelViewSet):
 
     @action(['post'], detail=False)
     def change_email(self, request, *args, **kwargs):
+        """
+        Метод принимает от авторизованного пользователя новый адрес email, сериализует данные.
+        Если новая почта корректная - вызывает метод send_email_confirm для формирования письма с подтверждением.
+        """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = self.request.user
@@ -168,6 +172,11 @@ class UserEmailChange(viewsets.ModelViewSet):
 
     @action(['post'], detail=False, permission_classes=[permissions.AllowAny])
     def change_email_confirm(self, request, *args, **kwargs):
+        """
+        Метод получает uid и token пользователя, когда он переходит по ссылке для подтверждения.
+        UidAndTokenSerializer по uid и токену определяет пользователя.
+        Из кэша по user.id достаем новую почту и перезаписываем ее
+        """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.user
@@ -180,6 +189,11 @@ class UserEmailChange(viewsets.ModelViewSet):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def send_email_confirm(self, user, new_email):
+        """
+        Отправка письма с ссылкой для подтверждения смены email.
+        id пользователя и новая почта записываются в кэш для дальнейшего извлечения,
+        когда пользователь перейдет по ссылке для подтверждения смены почты
+        """
         cache_key = f'user_{user.id}'
         cache.set(cache_key, new_email, timeout=86400)
         context = {"user": user}

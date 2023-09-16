@@ -4,7 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from config import settings
 
 
-def send_emails(email, context, template=None):
+def send_email(email, context, template=None):
     """
     Функция send_emails отправляет электронное письмо с содержимым HTML на указанный адрес электронной почты.
 
@@ -26,7 +26,7 @@ def send_emails(email, context, template=None):
     )
 
     msg = EmailMultiAlternatives(
-        subject=context['subject'],
+        subject=context.get('subject', None),
         body='',
         from_email=settings.DEFAULT_FROM_EMAIL,
         to=[email],
