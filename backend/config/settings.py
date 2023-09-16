@@ -14,7 +14,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # FIXME FOR SERVER
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -23,9 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3x_4_vx_1se8@dwc%*y2lju$zu(&8y$#7p%wj)nj2_i!bg*b5p'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False  # FIXME FOR SERVER
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.34.60.220", "localhost"]  # FIXME FOR SERVER
 
 # Application definition
 
@@ -88,10 +90,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+DATABASES = {  # FIXME FOR SERVER
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'djangodb',
+        'USER': 'django',
+        'PASSWORD': 'w8476crbxi736rx3o8rxfzd67gew76fr',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -129,6 +142,7 @@ USE_TZ = False  # DO NOT CHANGE IT.
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')  # FIXME FOR SERVER
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -165,7 +179,7 @@ DJOSER = {
 
 EMAIL_CHANGE_CONFIRM_URL = 'auth/change/email/{uid}/{token}'
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"  # TODO для разработки
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST = 'smtp.yandex.ru'

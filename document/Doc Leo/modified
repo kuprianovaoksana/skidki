@@ -22,5 +22,5 @@ This file is needed to remember what has changed.
 \backend\djangoscrapy\djangoscrapy\pipelines.py
 \backend\djangoscrapy\djangoscrapy\items.py
 \backend\djangoscrapy\djangoscrapy\apps.py
-\backend\djangoscrapy\djangoscrapy\spiders  # FIXME ADD EXCEPTION
+\backend\djangoscrapy\djangoscrapy\spiders  # FIXME ADD EXCEPTION AND MORE SPIDERS
 \backend\djangoscrapy\djangoscrapy\logic
