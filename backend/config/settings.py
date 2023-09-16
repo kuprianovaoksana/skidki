@@ -100,11 +100,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {  # FIXME FOR SERVER
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangodb',
-        'USER': 'django',
-        'PASSWORD': 'w8476crbxi736rx3o8rxfzd67gew76fr',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
