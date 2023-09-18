@@ -6,7 +6,7 @@ django-sslserver==0.22
 drf-yasg==1.21.7
 drf-social-oauth2==2.1.3
 oauth2_provider==0.0
-psycopg2==2.9.7
+psycopg2-binary==2.9.7
 
 # IF YOU ARE INSTALLING A PACKAGE OR LIBRARY, PLEASE BE RESPECTIVE OF OTHERS AND ADD IT HERE AND THE VERSION !
 # DON'T MAKE RUBBISH AND CONFUSING SOMEONE ELSE 👈(ﾟヮﾟ👈)

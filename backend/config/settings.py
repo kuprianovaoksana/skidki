@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-3x_4_vx_1se8@dwc%*y2lju$zu(&8y$#7p%wj)nj2_i!bg*b5p
 # DEBUG = True
 DEBUG = False  # FIXME FOR SERVER
 
-ALLOWED_HOSTS = ["192.34.60.220", "localhost"]  # FIXME FOR SERVER
+ALLOWED_HOSTS = ["*"]  # FIXME FOR SERVER
 
 # Application definition
 
