@@ -64,7 +64,7 @@ class RequestViewSet(viewsets.ModelViewSet):
     serializer_class = RequestSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = [
-        'user',
+        # 'user',  # FIXME FOR WORK
         'endpoint',
         'price',
         'discount',
