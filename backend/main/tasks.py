@@ -65,9 +65,9 @@ def time_end_notification():
     статус запроса на "Завершен"
     """
     date_now = datetime.now()
-    end_requests = (Request.objects.filter(period_date__isnull=False, status='В работе')
-                    # .annotate(date_end=ExpressionWrapper(F('created_at') + F('period_date'), output_field=DateField()))
-                    .filter(period_date__lt=date_now))
+    end_requests = (
+        Request.objects.filter(period_date__isnull=False, status='В работе').filter(period_date__lt=date_now)
+    )
 
     request_notification = (end_requests.filter(Q(email_notification=True) | Q(lk_notification=True))
                             .select_related('user', 'product')

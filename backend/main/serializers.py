@@ -20,7 +20,7 @@ class ProductHistorySerializer(serializers.ModelSerializer):
 
 
 class RequestSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    # user = serializers.HiddenField(default=serializers.CurrentUserDefault()) # FIXME FOR WORK
 
     class Meta:
         model = Request

@@ -20,8 +20,8 @@ app.conf.beat_schedule = {
 app.conf.beat_schedule = {
     'executes_every_monday_at_night': {
         'task': 'main.tasks.by_week',
-        'schedule': crontab(hour="3", minute="0", day_of_week='sunday'),  # TODO Uncomment this for real work.
-        # 'schedule': crontab(minute='*/15'),  # TODO Test if it works correctly.
+        'schedule': crontab(hour="3", minute="0", day_of_week='sunday'),
+        # 'schedule': crontab(minute='*/15'),
     },
 }
 

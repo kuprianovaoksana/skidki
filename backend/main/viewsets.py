@@ -30,7 +30,7 @@ User = get_user_model()
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]  # FIXME FOR WORK
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
@@ -47,7 +47,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ProductHistoryViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]  # FIXME FOR WORK
     queryset = ProductHistory.objects.all()
     serializer_class = ProductHistorySerializer
     filter_backends = [DjangoFilterBackend]
@@ -59,7 +59,7 @@ class ProductHistoryViewSet(viewsets.ModelViewSet):
 
 
 class RequestViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]  # FIXME FOR WORK
     queryset = Request.objects.all()
     serializer_class = RequestSerializer
     filter_backends = [DjangoFilterBackend]
@@ -127,7 +127,7 @@ class RequestViewSet(viewsets.ModelViewSet):
 
 
 class NotificationsViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]  # FIXME FOR WORK
     queryset = Notifications.objects.all()
     serializer_class = NotificationsSerializer
     filter_backends = [DjangoFilterBackend]

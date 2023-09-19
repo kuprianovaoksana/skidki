@@ -49,7 +49,7 @@ class Request(models.Model):
     email_notification = models.BooleanField('Уведомление на почту', default=False)
     lk_notification = models.BooleanField('Уведомление в личном кабинете', default=False)
     notification_type = models.IntegerField('Тип уведомлений', choices=TYPE, default=0)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user') # FIXME FOR WORK
 
     endpoint = models.URLField('Ссылка для отслеживания')
     price = models.IntegerField('Желаемая цена', blank=True, null=True)
@@ -88,9 +88,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     city = models.CharField('Город', max_length=32, blank=True)
     description_user = models.CharField('О себе', max_length=512, blank=True)
 
-    # будет реализовано в MVP2, пока не используется
-    subscription = models.CharField('Тип подписки', max_length=16, default='FREE')
-
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
@@ -105,4 +102,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        unique_together = ['email', 'username'] # связка email+username уникальна
+        unique_together = ['email', 'username']  # связка email+username уникальна
