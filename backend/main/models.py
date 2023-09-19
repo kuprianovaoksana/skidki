@@ -12,7 +12,7 @@ from config import settings
 class Product(models.Model):
     title = models.CharField('Наименование товара', max_length=64)
     shop = models.CharField('Интернет-магазин', max_length=32, blank=True, null=True)
-    description = models.CharField('Описание товара', max_length=512, blank=True, null=True)
+    description = models.CharField('Описание товара', max_length=5000, blank=True, null=True)
     old_price = models.CharField('Цена до скидки', max_length=32, blank=True, null=True)
     current_price = models.CharField('Цена со скидкой', max_length=32)
     url = models.URLField('URL товара', unique=True, primary_key=True)
@@ -20,11 +20,6 @@ class Product(models.Model):
     brand = models.CharField('Бренд', max_length=32, blank=True, null=True)
     category = models.CharField('Категория', max_length=32, blank=True, null=True)
     click_rate = models.IntegerField('Рейтинг кликов', default=0, blank=True, null=True)
-
-    def get_discount(self):
-        if self.old_price and self.current_price:
-            return (1 - self.current_price / self.old_price) * 100
-        return 0
 
 
 class ProductHistory(models.Model):

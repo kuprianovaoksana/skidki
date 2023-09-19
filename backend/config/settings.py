@@ -91,12 +91,23 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES = {  # FIXME FOR LOCAL TESTING
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {  # FIXME FOR TESTING
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'gah3vjLGvwQeX9REeQGS',
+#         'HOST': 'containers-us-west-175.railway.app',
+#         'PORT': '7174',
+#     }
+# }
 
 # DATABASES = {  # FIXME FOR SERVER
 #     'default': {
@@ -133,11 +144,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'Europe/Moscow'  # DO NOT CHANGE IT.
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = False  # DO NOT CHANGE IT.
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -223,8 +234,8 @@ CELERY_RESULT_BACKEND = f'redis://default:P2esA8YJJqVFjdW1kgGxl1jGSqmFgxEd' \
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = "Europe/Moscow"  # DO NOT CHANGE IT.
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_ENABLE_UTC = True
 
 # ISSUES NOTIFICATION
 

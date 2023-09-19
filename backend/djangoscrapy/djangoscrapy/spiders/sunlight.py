@@ -34,7 +34,7 @@ class SunlightSpider(CrawlSpider):
 
                     current_price = response.css(
                         "div.supreme-product-card__price-discount-price::text"
-                    ).get().strip().encode("ascii", "ignore").decode(),
+                    ).get().strip().encode("ascii", "ignore").decode()
 
                     url = response.url
 

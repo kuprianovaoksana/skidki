@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.db.models import Q
 from django.core import management
+from django.utils import timezone
 
 from celery import shared_task
 from celery import current_task
@@ -117,25 +118,24 @@ def task_monitor(self, request_id):
         Он используется для получения конкретного объекта запроса из базы данных
     """
     request_obj = Request.objects.get(pk=request_id)
-
-    task_action = PeriodicTask.objects.get(name=request_obj.task.name)  # THIS OBJECT IS TO STOP THE TASK.
+    task_obj = PeriodicTask.objects.get(name=request_obj.task.name)  # THIS OBJECT IS TO STOP THE TASK.
 
     task_time = current_task.request  # THIS OBJECT IS FOR CACHE EXPIRY TIME.
 
-    formatted_time = datetime.strptime(task_time.expires.replace("T", " "), '%Y-%m-%d %H:%M:%S')
+    formatted_time = datetime.strptime(task_time.expires.replace("T", " ")[:19], '%Y-%m-%d %H:%M:%S')
 
     if datetime.now() > formatted_time:
-        task_action.enabled = False
-        task_action.save()
-        Request.objects.filter(pk=request_id).update(completed_at=datetime.now(), status=1)
+        task_obj.enabled = False
+        task_obj.save()
+        Request.objects.filter(pk=request_id).update(completed_at=timezone.now(), status=1)
 
     try:
         product_obj = Product.objects.get(pk=request_obj.endpoint)
     except Exception as e:
-        task_action.enabled = False
-        task_action.save()
+        task_obj.enabled = False
+        task_obj.save()
 
-        Request.objects.filter(pk=request_id).update(completed_at=datetime.now(), status=2)
+        Request.objects.filter(pk=request_id).update(completed_at=timezone.now(), status=2)
 
         print(str(e), type(e))
     else:

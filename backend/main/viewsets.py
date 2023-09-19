@@ -90,16 +90,13 @@ class RequestViewSet(viewsets.ModelViewSet):
 
                 instance = serializer.save()
                 schedule, created = IntervalSchedule.objects.get_or_create(
-                    # Параметр every=1 в объекте IntervalSchedule определяет частоту интервала. В данном случае ему
-                    # присвоено значение 1, что означает, что периодическая задача будет запускаться каждую единицу
-                    # указанного периода (например, каждую 1 секунду, каждый 1 день и т.д.).
-                    every=30,  # Enter a number 5 or more here to check it in seconds.
-                    period=IntervalSchedule.SECONDS,  # FOR TESTING USE "SECONDS" IN REAL WORK "DAYS".
+                    every=2,
+                    period=IntervalSchedule.DAYS,
                 )
 
                 task = PeriodicTask.objects.create(
                     interval=schedule,
-                    name=f"Request: {instance.endpoint}",
+                    name=f"Request id: {instance.id}",
                     task="main.tasks.task_monitor",
                     kwargs=json.dumps({"request_id": instance.id}),
                     expires=instance.period_date
