@@ -30,12 +30,12 @@ body {
  } */
 
 
-main {
+/* main {
 	flex: 1 0 auto;
 	/* max-width: 1400px;
   min-width: 700px;
   margin: 0 auto; */
-}
+
 
 @media screen and (max-width: 360px) {
 	html,

@@ -1,6 +1,55 @@
 .footer {
     background-color: #6929F2;
     flex: 0 0 auto;
+    padding: 40px 70px;
+    height: 392px;
+    display: flex;
+    color: white;
 
-    height: 257px;
+    a{
+        color: white;
+        font-size: 18px;
+
+    }
+
 }
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    margin-top: 42px;
+    height: 200px;
+    justify-content: space-between;
+    width: 605px;
+}
+
+.NavLink{
+    font-size: 18px;
+    color: white;
+
+}
+
+.mail{
+    font-size: 20px;
+
+}
+
+.footer_right_container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+    justify-content: space-between;
+    align-content: flex-end;
+
+}
+
+.agreement{
+    display:flex;
+    flex-direction: column;
+
+    a{
+        margin-bottom: 10px;;
+    }
+}
+
+
