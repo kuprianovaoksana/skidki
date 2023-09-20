@@ -179,8 +179,8 @@ DJOSER = {
 
 EMAIL_CHANGE_CONFIRM_URL = 'auth/change/email/{uid}/{token}'
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
