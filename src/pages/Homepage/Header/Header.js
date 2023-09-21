@@ -1,3 +1,4 @@
+import Search from '../../../components/Search/Search';
 import css from './header.module.scss';
 import {NavLink} from "react-router-dom";
 // import {useNavigate} from 'react-router-dom';
@@ -62,14 +63,15 @@ const Header = () => {
                         </NavLink>
                     }
                 </nav>
-            </div>            
-            <div className={css.search}>
+            </div>
+            <Search />
+            {/* <div className={css.search}>
                 <div>
                     <input className={css.input} placeholder="Введите ссылку на товар"/>
                     <div><img src="/images/loupe.png" alt=""/></div>
                 </div>
                 <button className={css.button}>Следить</button>
-            </div>
+            </div> */}
         </header>
     );
 }

@@ -6,7 +6,9 @@
     background-color: #6929F2;
     height: 217px;
     padding: 40px 70px;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .logo_menu {
@@ -76,7 +78,7 @@
     .icon{
         display: block;
     }
-    
+
     .icon_active {
         display: none;
     }

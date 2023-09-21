@@ -1,13 +1,21 @@
 @font-face {
-	src: url('./styles/fonts/Roboto-Bold.ttf') rel="preload";
-		font-family: "Roboto-Bold";
-	src: url('./styles/fonts/Roboto-Regular.ttf') rel="preload";
-		font-family: "Roboto-Regular";
-	src: url('./styles/fonts/Rubik-Regular.ttf') rel="preload";
-		font-family: "Rubik-Regular";
-	src: url(./styles/fonts/Inter-Regular.ttf) rel="preload";
-		font-family: "Inter-Regular";
+	font-family: "Roboto-Bold";
+	src: url('./styles/fonts/Roboto-Bold.ttf');
+	font-weight: bold;
 }
+@font-face {
+	font-family: "Roboto-Regular";
+	src: url('./styles/fonts/Roboto-Regular.ttf');
+}
+@font-face {
+	font-family: "Rubik-Regular";
+	src: url('./styles/fonts/Rubik-Regular.ttf');
+}
+@font-face {
+	font-family: "Inter-Regular";
+	src: url(./styles/fonts/Inter-Regular.ttf);
+}
+
 html,
 body {
 	margin: 0;
