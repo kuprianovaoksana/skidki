@@ -1,11 +1,11 @@
+import pytz
+
 from datetime import datetime
 
 from django.db.models import Q
 from django.core import management
-from django.utils import timezone
 
 from celery import shared_task
-from celery import current_task
 from django_celery_beat.models import PeriodicTask
 
 from .logic.sender import send_email
@@ -118,27 +118,31 @@ def task_monitor(self, request_id):
         Он используется для получения конкретного объекта запроса из базы данных
     """
     request_obj = Request.objects.get(pk=request_id)
-    task_obj = PeriodicTask.objects.get(name=request_obj.task.name)  # THIS OBJECT IS TO STOP THE TASK.
+    task_obj = PeriodicTask.objects.get(name=request_obj.task.name)
 
-    task_time = current_task.request  # THIS OBJECT IS FOR CACHE EXPIRY TIME.
+    time_format = '%Y-%m-%d %H:%M:%S'
+    current_time = datetime.strptime(datetime.now().strftime(time_format), time_format)
+    expiry_time = datetime.strptime(request_obj.period_date.strftime(time_format), time_format)
+    completed_time = datetime.now(pytz.timezone('Europe/Moscow'))
 
-    formatted_time = datetime.strptime(task_time.expires.replace("T", " ")[:19], '%Y-%m-%d %H:%M:%S')
-
-    if datetime.now() > formatted_time:
+    if current_time > expiry_time:
+        # print("Задача завершена")
         task_obj.enabled = False
         task_obj.save()
-        Request.objects.filter(pk=request_id).update(completed_at=timezone.now(), status=1)
+        Request.objects.filter(pk=request_id).update(completed_at=completed_time, status=1)
 
     try:
         product_obj = Product.objects.get(pk=request_obj.endpoint)
     except Exception as e:
+        # print("Товар не найден")
         task_obj.enabled = False
         task_obj.save()
 
-        Request.objects.filter(pk=request_id).update(completed_at=timezone.now(), status=2)
+        Request.objects.filter(pk=request_id).update(completed_at=completed_time, status=2)
 
         print(str(e), type(e))
     else:
+        # print("Товар найден и выполняется операцией")
         scraper = ByUserRequest(request_obj.endpoint)
         price = scraper.getting_price()
 

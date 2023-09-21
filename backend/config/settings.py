@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {  # FIXME FOR LOCAL TESTING
+DATABASES = {  # FIXME FOR TESTING
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -169,7 +169,7 @@ REST_FRAMEWORK = {
         'drf_social_oauth2.authentication.SocialAuthentication',
     ),
 
-    # 'DEFAULT_PERMISSION_CLASSES': [  # FIXME FOR WORK
+    # 'DEFAULT_PERMISSION_CLASSES': [  # FIXME FOR SERVER
     #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     # ],
 
@@ -192,7 +192,7 @@ DJOSER = {
 EMAIL_CHANGE_CONFIRM_URL = 'auth/change/email/{uid}/{token}'
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"   # FIXME FOR SERVER
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
@@ -235,7 +235,6 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-CELERY_ENABLE_UTC = True
 
 # ISSUES NOTIFICATION
 

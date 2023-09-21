@@ -3,14 +3,14 @@ This file is needed to remember what has changed.
 \skidki\Doc Leo\clean_up.py
 
 \backend\config\urls.py
-\backend\config\settings.py  # FIXME SQLite backend does not support timezone-aware datetimes when USE_TZ is False.
+\backend\config\settings.py  # FIXME SET CORRECT CELERY TIMEZONE
 \backend\config\celery.py
 \backend\config\__init__.py
 
-\backend\main\viewsets.py  # FIXME EDIT REQUEST QUEUE
+\backend\main\viewsets.py
 \backend\main\views.py
 \backend\main\tasks.py
-\backend\main\signals.py
+\backend\main\signals.py  # FIXME ADD REMOVE/ADD TASK TIME
 \backend\main\serializers.py
 \backend\main\models.py
 \backend\main\apps.py
