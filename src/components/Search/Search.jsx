@@ -3,7 +3,7 @@ import cn from "classnames";
 import s from './style.module.scss'
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { getWantedProductRequest } from "../../store/actions/sedarchAction";
+import { getWantedProductRequest } from "../../store/actions/sedarchActioncopy";
 
 function Search() {
 	const dispatch = useDispatch();
