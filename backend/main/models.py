@@ -22,6 +22,11 @@ class Product(models.Model):
     category = models.CharField('Категория', max_length=32, blank=True, null=True)
     click_rate = models.IntegerField('Рейтинг кликов', default=0, blank=True, null=True)
 
+    def get_discount(self):
+        if self.old_price and self.current_price:
+            return (1 - float(self.current_price) / float(self.old_price)) * 100
+        return 0
+
 
 class ProductHistory(models.Model):
     product_id = models.ForeignKey("Product", on_delete=models.CASCADE)
@@ -40,6 +45,7 @@ class Request(models.Model):
         (0, 'В работе'),
         (1, 'Выполнен'),
         (2, 'Ошибка в URL'),
+        (3, 'Заморожен'),
     )
 
     email_notification = models.BooleanField('Уведомление на почту', default=False)
@@ -51,9 +57,11 @@ class Request(models.Model):
     price = models.IntegerField('Желаемая цена', blank=True, null=True)
     discount = models.IntegerField('Желаемая скидка', blank=True, null=True)
     created_at = models.DateField('Дата создания запроса', auto_now_add=True)
-    completed_at = models.DateTimeField('Дата завершения запроса', default=None, blank=True, null=True)
+    completed_at = models.DateField('Дата завершения запроса', default=None, blank=True, null=True)
     period_date = models.DateTimeField('Время отслеживания')
     status = models.IntegerField('Статус запроса', choices=STATUS, default=0)
+    freeze_task = models.BooleanField('Заморозить задачу', default=False)
+    delete_task = models.BooleanField('Удалить задачу', default=False)
     task = models.OneToOneField(PeriodicTask, null=True, blank=True, on_delete=models.CASCADE)
 
 

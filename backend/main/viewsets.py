@@ -71,7 +71,28 @@ class RequestViewSet(viewsets.ModelViewSet):
         'completed_at',
         'period_date',
         'status',
+        'freeze_task',
     ]
+
+    @action(methods=["get"], detail=True)
+    def delete(self, request, pk=None):
+        """
+        Вышеуказанная функция удаляет экземпляр и возвращает ответ с кодом состояния 204 (нет содержимого).
+
+        :param request:
+            Параметр request — это объект, который представляет HTTP-запрос, сделанный клиентом.
+            Он содержит такую информацию, как метод запроса (например, GET, POST, DELETE), заголовки,
+            параметры запроса и тело запроса.
+
+        :param pk:
+            Параметр «pk» означает «первичный ключ» и используется для идентификации конкретного объекта в
+            базе данных. В этом случае он используется для идентификации объекта, который необходимо удалить.
+
+        :return:
+            Код возвращает объект Response с кодом состояния 204 (NO_CONTENT).
+        """
+        self.perform_destroy(instance=self.get_object())
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     def perform_create(self, serializer):
         """

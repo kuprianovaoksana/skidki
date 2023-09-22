@@ -2,17 +2,56 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.db.models import Q
 
-from .models import Product
-from .tasks import create_email_notification, create_lk_notification
+from django_celery_beat.models import PeriodicTask
+
+from .logic.notification import create_task_notification
+from .models import Product, Request
+
+
+@receiver(pre_save, sender=Request)
+def update_request(sender, instance, **kwargs):
+    """
+    Функция update_request обновляет объект задачи на основе значений атрибутов freeze_task и period_date.
+
+    :param sender:
+        Параметр `sender` относится к классу модели, который вызвал сигнал.
+        В данном случае это может быть класс модели, у которого сигнал post_save подключен к
+        функции update_request.
+
+    :param instance:
+        Параметр «instance» — это экземпляр объекта модели, который активировал функцию update_request.
+        Он представляет объект, который был обновлен или создан.
+    """
+    if not instance._state.adding:
+        task_obj = PeriodicTask.objects.get(pk=instance.task.pk)
+        if instance.freeze_task:
+            task_obj.enabled = False
+            task_obj.save()
+            instance.status = 3
+            # print("Задержка задачи")
+        else:
+            PeriodicTask.objects.filter(pk=instance.task.pk).update(expires=instance.period_date)
+            task_obj.enabled = True
+            task_obj.save()
+            instance.status = 0
+            # print("Обновление задачи")
+
+    # print("Создание задачи")
 
 
 @receiver(pre_save, sender=Product)
 def check_notification(sender, instance, **kwargs):
     """
-    Сигнал формирует список запросов для направления уведомлений о нахождении товара или увеличении скидки.
-    pre_save для расчета как изменилась скидка
-    success_requests - queryset из объектов Request, в которых товар найден по установленной цене/скидке
-    discount_up_request - queryset из объектов Request, в которых товар не найден, но скидка выросла
+    Функция представляет собой приемник сигнала предварительного сохранения в Python, который проверяет
+    изменения в объекте Product и создает уведомления о задачах на основе определенных условий.
+
+    :param sender:
+        Параметр sender относится к классу модели, отправляющему сигнал.
+        В данном случае это модель «Продукт».
+
+    :param instance:
+        Параметр «instance» относится к сохраняемому экземпляру модели «Product».
+        Он представляет объект, который создается или обновляется.
     """
     if not instance._state.adding:  # проверка, что объект изменен, а не создан
         product = Product.objects.get(pk=instance.pk)
@@ -37,34 +76,3 @@ def check_notification(sender, instance, **kwargs):
 
             if discount_up_request.exists():
                 create_task_notification(discount_up_request, title, discount, difference_discount, 'changed')
-
-
-def create_task_notification(qs, title, discount, difference_discount, about):
-    """
-    Функция отправляет создает задачу на отправку уведомления в указанных пользователем каналах
-    emails: список почтовых адресов, на которые будут оптравлены уведомления
-    lk_ids: список id объектов Request, связанным пользователям уведомление поступил в личный кабинет
-    Списки emails и lk_ids формируются для избежания излишних запросов к БД
-    """
-    request_notifications = (qs.filter(Q(email_notification=True) | Q(lk_notification=True))
-                             .select_related('user')
-                             .only('user__email', 'product__title', 'email_notification', 'lk_notification'))
-
-    emails = []
-    lk_ids = []
-
-    for request in request_notifications:
-        email = request.user.email if request.email_notification else None
-        request_id = request.id if request.lk_notification else None
-
-        if email:
-            emails.append(email)
-
-        if request_id:
-            lk_ids.append(request_id)
-
-    if emails:
-        create_email_notification.apply_async((emails, title, discount, difference_discount, about))
-
-    if lk_ids:
-        create_lk_notification.apply_async((lk_ids, title, discount, difference_discount, about))
