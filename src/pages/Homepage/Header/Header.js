@@ -65,13 +65,6 @@ const Header = () => {
                 </nav>
             </div>
             <Search />
-            {/* <div className={css.search}>
-                <div>
-                    <input className={css.input} placeholder="Введите ссылку на товар"/>
-                    <div><img src="/images/loupe.png" alt=""/></div>
-                </div>
-                <button className={css.button}>Следить</button>
-            </div> */}
         </header>
     );
 }

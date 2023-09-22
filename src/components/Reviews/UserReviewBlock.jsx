@@ -3,7 +3,7 @@ import cn from "classnames";
 import s from './style.module.scss';
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { getWantedProductRequest } from "../../store/actions/searchAction";
+import { getWantedProductRequest } from "../../store/actions/productAction";
 
 function UserReviewBlock() {
 	const dispatch = useDispatch();

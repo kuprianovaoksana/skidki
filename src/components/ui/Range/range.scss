@@ -1,0 +1,69 @@
+@import '../../../styles/variables.scss';
+
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider:hover .ant-slider-track,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-track {
+    background-color: $colorButton;
+}
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-rail {
+    background-color: $colorInitial;
+}
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-handle::after,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider:hover .ant-slider-handle::after,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider:focus .ant-slider-handle::after,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-handle:hover::after, :where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-handle:active::after, :where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-handle:focus::after {
+    background-color: $colorButton;
+    box-shadow: none;
+    width: 20px;
+    height: 20px;
+    transition:none;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    margin: -5px;
+}
+//tooltip
+:where(.css-dev-only-do-not-override-1vr7spz).ant-tooltip .ant-tooltip-inner {
+    min-width: 20px;
+    min-height: 12px;
+    padding: 0;
+    margin-top: -5px;
+    text-align: center;
+    background-color: transparent;
+    box-shadow: none;
+    @include fontRoboto(10, 14, 400, $colorTextGreyLight);
+}
+:where(.css-dev-only-do-not-override-1vr7spz).ant-tooltip .ant-tooltip-arrow:before {
+    content: none;
+}
+//mark
+
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-mark-text {
+    @include fontRoboto(10, 14, 400, transparent);
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    word-break: keep-all;
+    cursor: pointer;
+    user-select: none;
+}
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-mark-text-active {
+    @include fontRoboto(10, 14, 400, $colorTextGreyLight);
+}
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider:hover .ant-slider-dot {
+    border-color: transparent;
+}
+:where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-dot {
+    border-color: transparent;
+    background-color: transparent;
+    border: none;
+}
+// :where(.css-dev-only-do-not-override-1vr7spz).ant-slider:hover .ant-slider-mark-text {
+//     color: $colorTextGreyLight;
+// }
+
+.range_percent {
+    & .ant-tooltip-inner {
+        &::after {
+            content: '%';
+        }
+    }
+}

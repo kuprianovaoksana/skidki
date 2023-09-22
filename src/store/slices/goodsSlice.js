@@ -4,12 +4,14 @@ const initialState = {
     loading: false,
     error: '',
     errorMessage: '',
-    product: '',
-    userProduct: ''
+    allGoods: '',
+    userGoods: '',
+    goodsView: 'list',
+    goodsCategory: '',
 }
 
-export const productSlice = createSlice({
-    name: 'product',
+export const goodsSlice = createSlice({
+    name: 'goods',
     initialState,
     reducers: {
         fetching: (state) => {
@@ -26,10 +28,16 @@ export const productSlice = createSlice({
         fetchErrorMessage: (state, action) => {
             state.loading = false;
             state.errorMessage = action.payload;
-        }
+        },
+        setProductCardViewTile: (state) => {
+            state.goodsView = 'tile';
+        },
+		setProductCardViewList: (state) => {
+            state.goodsView = 'list';
+        },
     }
 });
 
-export const { fetching, fetchSuccess, fetchError, fetchErrorMessage } = productSlice.actions
+export const { fetching, fetchSuccess, fetchError, fetchErrorMessage, setProductCardViewTile, setProductCardViewList } = goodsSlice.actions
 
-export default productSlice.reducer
+export default goodsSlice.reducer

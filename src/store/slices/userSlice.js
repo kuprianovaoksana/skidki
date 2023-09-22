@@ -4,12 +4,11 @@ const initialState = {
     loading: false,
     error: '',
     errorMessage: '',
-    product: '',
-    userProduct: ''
+    user: '',
 }
 
-export const productSlice = createSlice({
-    name: 'product',
+export const searchSlice = createSlice({
+    name: 'search',
     initialState,
     reducers: {
         fetching: (state) => {
@@ -28,8 +27,8 @@ export const productSlice = createSlice({
             state.errorMessage = action.payload;
         }
     }
-});
+})
 
-export const { fetching, fetchSuccess, fetchError, fetchErrorMessage } = productSlice.actions
+export const { fetching, fetchSuccess, fetchError, fetchErrorMessage } = searchSlice.actions
 
-export default productSlice.reducer
+export default searchSlice.reducer

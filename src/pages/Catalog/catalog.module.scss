@@ -1,0 +1,10 @@
+@import '../../styles/variables.scss';
+
+.catalog {
+	background-color: $colorInitial;
+	padding: 40px 70px;
+	&__title {
+		@include fontRoboto(30, 40, 700);
+		margin-bottom: 50px;
+	}
+}

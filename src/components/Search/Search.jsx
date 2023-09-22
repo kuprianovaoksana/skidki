@@ -3,7 +3,7 @@ import cn from "classnames";
 import s from './style.module.scss'
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { getWantedProductRequest } from "../../store/actions/searchAction";
+import { getWantedProductRequest } from "../../store/actions/productAction";
 
 function Search() {
 	const dispatch = useDispatch();
@@ -28,7 +28,6 @@ function Search() {
 				</div>
 				<button className={s.search__btnSubmit} type="submit">Следить</button>
 			</form>
-
 		</div>
 	);
 };

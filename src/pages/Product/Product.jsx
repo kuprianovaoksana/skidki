@@ -3,7 +3,7 @@ import cn from "classnames";
 import s from './style.module.scss'
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getWantedProductRequest } from "../../store/actions/searchAction";
+import { getWantedProductRequest } from "../../store/actions/productAction";
 import ProductDetail from "../../components/ProductDetail/ProductDetail";
 import ProductTrackSettings from "../../components/ProductTrackSettings/ProductTrackSettings";
 import Reviews from "../../components/Reviews/Reviews";

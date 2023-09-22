@@ -1,0 +1,84 @@
+@import '../../styles/variables.scss';
+@import '../ui/Button/style.module.scss';
+
+.productCard {
+	display: grid;
+	@include width-height(100%, 250px);
+	grid-template-columns: 220px 30px fit-content(75px) 1fr 30px 140px 110px;
+	grid-template-rows: 30px repeat(16, 10px) 30px;
+	grid-template-areas:
+		'i . . . . . .'
+		'i . t t . . .'
+		'i . t t . . .'
+		'i . t t . p p'
+		'i . t t . p p'
+		'i . t t . p p'
+		'i . t t . p p'
+		'i . . . . . .'
+		'i . . . . o o'
+		'i . . . . o o'
+		'i . l . . o o'
+		'i . l . . . .'
+		'i . l . . b b'
+		'i . . . . b b'
+		'i . d a . b b'
+		'i . d a . . .'
+		'i . d a . . .';
+	background-color: $colorWhite;
+	border-radius: 10px;
+	padding: 15px;
+	&__photo {
+		grid-area: i;
+		img {
+			width: 100%;
+		}
+
+	}
+	&__title {
+		grid-area: t;
+		@include fontRoboto(24, 30, 500);
+	}
+	&__price {
+		grid-area: p;
+		@include fontRoboto(30, 40, 700);
+	}
+	&__oldPrice {
+		grid-area: o;
+		@include fontRoboto(20, 30, 700, $colorLightgray);
+		text-decoration: line-through;
+	}
+	&__likes {
+		grid-area: l;
+		@include fontRoboto(20, 30, 500);
+		&::before {
+			color: $colorPink;
+		}
+	}
+	&__pricemove {
+		grid-area: a;
+		color: $colorPink;
+		&_down {
+			grid-area: a;
+			&::before {
+				rotate: 180deg;
+			}
+		}
+	}
+	&__date {
+		grid-area: d;
+		@include fontRoboto(18, 24, 500);
+	}
+	&__button {
+		grid-area: b;
+		@extend .button_main;
+		@include textCenter;
+		border-radius: 5px;
+	}
+
+}
+
+.priceChart {
+	&__title {
+		@include fontRoboto(24, 30, 500);
+	}
+}

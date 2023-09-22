@@ -1,0 +1,15 @@
+@import '../../styles/variables.scss';
+@import '../Product/style.module.scss';
+
+.category {
+	@include width-height(100%);
+	background-color: $colorInitial;
+	padding: 40px 70px;
+	display: grid;
+	&__path {
+		margin-bottom: 50px;
+	}
+}
+.pathLink {
+	@extend .pathLink;
+}
