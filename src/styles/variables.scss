@@ -35,24 +35,24 @@ $shadow-y6-b4-5: 0px 6px 4px 0px rgba(0, 0, 0, 0.05);
 $shadow-y11-b4-1: 0px 11px 4px 0px rgba(0, 0, 0, 0.01);
 $shadow-y17-b5-0: 0px 17px 5px 0px rgba(0, 0, 0, 0.00);
 
-@mixin fontRoboto($size: 20px, $height: 30px, $weight: 400, $color: black){
+@mixin fontRoboto($size: 20, $height: 30, $weight: 400, $color: black){
 	font-family: 'Roboto-Regular', Arial, Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: $size;
-	line-height: $height;
+	font-size: $size+px;
+	line-height: $height+px;
 	font-weight: $weight;
 	color: $color;
 }
-@mixin fontRubik($size: 20px, $height: 30px, $weight: 400, $color: black){
+@mixin fontRubik($size: 20, $height: 30, $weight: 400, $color: black){
 	font-family: 'Rubik-Regular', Arial, Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: $size;
-	line-height: $height;
+	font-size: $size+px;
+	line-height: $height+px;
 	font-weight: $weight;
 	color: $color;
 }
-@mixin fontInter($size: 20px, $height: 30px, $weight: 400, $color: black){
+@mixin fontInter($size: 20, $height: 30, $weight: 400, $color: black){
 	font-family: 'Inter-Regular', Arial, Helvetica, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: $size;
-	line-height: $height;
+	font-size: $size+px;
+	line-height: $height+px;
 	font-weight: $weight;
 	color: $color;
 }

@@ -1,0 +1,6 @@
+@import '../../../styles/variables.scss';
+@import '../Button/style.module.scss';
+
+.linkButton {
+	@extend .button_main;
+}

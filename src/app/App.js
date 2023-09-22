@@ -8,12 +8,7 @@ import {Entrance} from '../pages/Entrance/Entrance';
 import {MyDiscount} from '../pages/MyDiscount/MyDiscount';
 import {Notifications} from '../pages/Notifications/Notifications';
 import {Settings} from '../pages/Settings/Settings';
-
-
-
-
-
-
+import Product from '../pages/Product/Product';
 
 function App() {
   return (
@@ -22,6 +17,7 @@ function App() {
         <Route path='/' element={<Layout/>}>
           <Route index element={<Homepage/>}/>
           <Route path='/catalog' element={<Catalog/>}/>
+          <Route path='/choosed_product' element={<Product/>}/>
           <Route path='/entrance' element={<Entrance/>}/>
           <Route path='/discount' element={<MyDiscount/>}/>
           <Route path='/notifications' element={<Notifications/>}/>

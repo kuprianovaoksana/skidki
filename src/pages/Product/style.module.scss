@@ -1,0 +1,21 @@
+@import '../../styles/variables.scss';
+
+.product {
+	background-color: $colorInitial;
+	padding: 40px 75px;
+	&__path {
+		display: flex;
+	}
+
+}
+
+.pathLink {
+	@include fontRoboto(24, 30, 700);
+	display: flex;
+	&::after {
+		rotate: 270deg;
+		font-size: 14px;
+		padding: 6px 8px;
+		margin: 0 15px;
+	}
+}

@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 .search {
-
+	
 	&__form {
 		display: flex;
 		max-width: 960px;
@@ -16,16 +16,10 @@
 	&__input {
 		height: 24px;
 		width: 100%;
-		@include fontInter(18, 24, 400, $colorTextBlack);
-		&::placeholder {
-			@include fontInter(18, 24, 400, $colorTextPlaceholder);
-			display: flex;
-			align-items: flex-end;
-		}
 	}
 	&__btnSubmit {
 		cursor: pointer;
-		@include fontRoboto(18, 24, 700, $colorButton);
+		@include fontRoboto(18px, 24px, 700, $colorButton);
 		@include borderStyle(none, 5px);
 		padding: 13px 38.5px;
 		background: $gradientMainButton;
