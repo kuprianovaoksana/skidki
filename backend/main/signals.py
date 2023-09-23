@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.db.models import Q
@@ -11,18 +13,26 @@ from .models import Product, Request
 @receiver(pre_save, sender=Request)
 def update_request(sender, instance, **kwargs):
     """
-    Функция update_request обновляет объект задачи на основе значений атрибутов freeze_task и period_date.
+    Вышеупомянутая функция обновляет объект запроса, вычисляя дату следующего периода, обновляя дату истечения срока
+    действия соответствующей периодической задачи и корректируя статус и включенное состояние задачи на основе флага
+    Freeze_task.
 
     :param sender:
-        Параметр `sender` относится к классу модели, который вызвал сигнал.
-        В данном случае это может быть класс модели, у которого сигнал post_save подключен к
-        функции update_request.
+        Параметр sender относится к классу модели, отправляющему сигнал. В данном случае «отправителем» является
+        модель «Запрос».
 
     :param instance:
-        Параметр «instance» — это экземпляр объекта модели, который активировал функцию update_request.
-        Он представляет объект, который был обновлен или создан.
+        Параметр «instance» относится к сохраняемому экземпляру модели «Request». Он представляет собой
+        отдельный объект модели «Запрос» и содержит данные, которые сохраняются или обновляются.
     """
+
     if not instance._state.adding:
+        weeks = timedelta(weeks=int(instance.period_weeks))
+        next_period = instance.period_date + weeks
+
+        instance.period_date = next_period
+        PeriodicTask.objects.filter(pk=instance.task.pk).update(expires=next_period)
+
         task_obj = PeriodicTask.objects.get(pk=instance.task.pk)
         if instance.freeze_task:
             task_obj.enabled = False
@@ -30,7 +40,6 @@ def update_request(sender, instance, **kwargs):
             instance.status = 3
             # print("Задержка задачи")
         else:
-            PeriodicTask.objects.filter(pk=instance.task.pk).update(expires=instance.period_date)
             task_obj.enabled = True
             task_obj.save()
             instance.status = 0

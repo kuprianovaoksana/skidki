@@ -175,7 +175,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 5
 }
 
 DJOSER = {
@@ -240,109 +240,109 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # ISSUES NOTIFICATION
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-
-    'formatters': {
-        'simple_0': {
-            "format": "[{asctime}], [{levelname}], [{message}]",
-            "style": "{",
-        },
-        'simple_1': {
-            "format": "[{asctime}], [{levelname}], [{module}], [{message}]",
-            "style": "{",
-        },
-        'simple_2': {
-            "format": "[{asctime}], [{levelname}], [{message}], [{pathname}]",
-            "style": "{",
-        },
-        'simple_3': {
-            "format": "[{asctime}], [{levelname}], [{message}], [{pathname}], [{exc_info}]",
-            "style": "{",
-        },
-    },
-
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-    },
-
-    'handlers': {
-        'console_I': {  # WORKING ONLY ON DEBUG = False
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': 'general.log',
-            'formatter': 'simple_1',
-            'filters': ['require_debug_false'],
-        },
-        'console_D': {  # WORKING ONLY ON DEBUG = True
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple_0',
-            'filters': ['require_debug_true'],
-        },
-        'console_W': {  # WORKING ONLY ON DEBUG = True
-            'level': 'WARNING',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple_2',
-            'filters': ['require_debug_true'],
-        },
-        'console_E_C': {  # WORKING ONLY ON DEBUG = True
-            'level': 'ERROR',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple_3',
-            'filters': ['require_debug_true'],
-        },
-        'console_E_C_TO_F': {  # WORKING EVERY
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': 'errors.log',
-            'formatter': 'simple_3'
-        },
-        'security': {  # WORKING EVERY
-            # 'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': 'security.log',
-            'formatter': 'simple_1'
-        },
-        'mail_001': {  # WORKING ONLY ON DEBUG = False
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'formatter': 'simple_2',
-            'filters': ['require_debug_false'],
-            # "include_html": True  # If you need html problem type
-        },
-    },
-
-    'loggers': {
-        'django': {
-            'handlers': ['console_I', 'console_D', 'console_W', 'console_E_C'],
-            'propagate': True,
-        },
-        'django.security': {
-            'handlers': ['security'],
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['console_E_C_TO_F', 'mail_001'],
-            'propagate': True,
-        },
-        'django.server': {
-            'handlers': ['console_E_C_TO_F', 'mail_001'],
-            'propagate': True,
-        },
-        'django.template': {
-            'handlers': ['console_E_C_TO_F'],
-            'propagate': True,
-        },
-        'django.db.backends': {
-            'handlers': ['console_E_C_TO_F'],
-            'propagate': True,
-        },
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#
+#     'formatters': {
+#         'simple_0': {
+#             "format": "[{asctime}], [{levelname}], [{message}]",
+#             "style": "{",
+#         },
+#         'simple_1': {
+#             "format": "[{asctime}], [{levelname}], [{module}], [{message}]",
+#             "style": "{",
+#         },
+#         'simple_2': {
+#             "format": "[{asctime}], [{levelname}], [{message}], [{pathname}]",
+#             "style": "{",
+#         },
+#         'simple_3': {
+#             "format": "[{asctime}], [{levelname}], [{message}], [{pathname}], [{exc_info}]",
+#             "style": "{",
+#         },
+#     },
+#
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse',
+#         },
+#     },
+#
+#     'handlers': {
+#         'console_I': {  # WORKING ONLY ON DEBUG = False
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': 'general.log',
+#             'formatter': 'simple_1',
+#             'filters': ['require_debug_false'],
+#         },
+#         'console_D': {  # WORKING ONLY ON DEBUG = True
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple_0',
+#             'filters': ['require_debug_true'],
+#         },
+#         'console_W': {  # WORKING ONLY ON DEBUG = True
+#             'level': 'WARNING',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple_2',
+#             'filters': ['require_debug_true'],
+#         },
+#         'console_E_C': {  # WORKING ONLY ON DEBUG = True
+#             'level': 'ERROR',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'simple_3',
+#             'filters': ['require_debug_true'],
+#         },
+#         'console_E_C_TO_F': {  # WORKING EVERY
+#             'level': 'ERROR',
+#             'class': 'logging.FileHandler',
+#             'filename': 'errors.log',
+#             'formatter': 'simple_3'
+#         },
+#         'security': {  # WORKING EVERY
+#             # 'level': 'ERROR',
+#             'class': 'logging.FileHandler',
+#             'filename': 'security.log',
+#             'formatter': 'simple_1'
+#         },
+#         'mail_001': {  # WORKING ONLY ON DEBUG = False
+#             'level': 'ERROR',
+#             'class': 'django.utils.log.AdminEmailHandler',
+#             'formatter': 'simple_2',
+#             'filters': ['require_debug_false'],
+#             # "include_html": True  # If you need html problem type
+#         },
+#     },
+#
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console_I', 'console_D', 'console_W', 'console_E_C'],
+#             'propagate': True,
+#         },
+#         'django.security': {
+#             'handlers': ['security'],
+#             'propagate': True,
+#         },
+#         'django.request': {
+#             'handlers': ['console_E_C_TO_F', 'mail_001'],
+#             'propagate': True,
+#         },
+#         'django.server': {
+#             'handlers': ['console_E_C_TO_F', 'mail_001'],
+#             'propagate': True,
+#         },
+#         'django.template': {
+#             'handlers': ['console_E_C_TO_F'],
+#             'propagate': True,
+#         },
+#         'django.db.backends': {
+#             'handlers': ['console_E_C_TO_F'],
+#             'propagate': True,
+#         },
+#     }
+# }
