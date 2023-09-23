@@ -10,7 +10,7 @@ This file is needed to remember what has changed.
 \backend\main\viewsets.py
 \backend\main\views.py
 \backend\main\tasks.py
-\backend\main\signals.py  # FIXME ADD DELETE TASK
+\backend\main\signals.py
 \backend\main\serializers.py
 \backend\main\models.py
 \backend\main\apps.py

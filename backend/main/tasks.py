@@ -126,25 +126,24 @@ def task_monitor(self, request_id):
     completed_date = datetime.strptime(datetime.now().strftime(date_format), date_format)
 
     if current_time > expiry_time:
-        # print("Задача завершена")
         task_obj.enabled = False
         task_obj.save()
         Request.objects.filter(pk=request_id).update(completed_at=completed_date, status=1, period_week="0")
+        # print("Задача завершена")
 
     try:
         product_obj = Product.objects.get(pk=request_obj.endpoint)
     except Exception as e:
-        # print("Товар не найден")
         task_obj.enabled = False
         task_obj.save()
-
         Request.objects.filter(pk=request_id).update(completed_at=completed_date, status=2)
 
         print(str(e), type(e))
+        # print("Товар не найден")
     else:
-        # print("Товар найден и выполняется операцией")
         scraper = ByUserRequest(request_obj.endpoint)
         price = scraper.getting_price()
 
         abracadabra = Magic(price, product_obj)
         abracadabra.add_product_history()
+        # print("Товар найден и выполняется операцией")

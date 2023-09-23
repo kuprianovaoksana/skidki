@@ -62,7 +62,6 @@ class Request(models.Model):
     period_date = models.DateTimeField('Время отслеживания', auto_now_add=True)
     status = models.IntegerField('Статус запроса', choices=STATUS, default=0)
     freeze_task = models.BooleanField('Заморозить задачу', default=False)
-    delete_task = models.BooleanField('Удалить задачу', default=False)
     task = models.OneToOneField(PeriodicTask, null=True, blank=True, on_delete=models.CASCADE)
 
 

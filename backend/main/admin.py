@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from .models import Product, ProductHistory, Request
+from .models import Product, ProductHistory, Request, Notifications
 
 User = get_user_model()
 
@@ -13,3 +13,4 @@ class PersonAdmin(admin.ModelAdmin):
 admin.site.register(Product)
 admin.site.register(ProductHistory)
 admin.site.register(Request)
+admin.site.register(Notifications)

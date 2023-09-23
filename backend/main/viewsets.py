@@ -72,6 +72,7 @@ class RequestViewSet(viewsets.ModelViewSet):
         'period_date',
         'status',
         'freeze_task',
+        'period_weeks',
     ]
 
     @action(methods=["get"], detail=True)
@@ -121,7 +122,6 @@ class RequestViewSet(viewsets.ModelViewSet):
                     name=f"Request id: {instance.id}",
                     task="main.tasks.task_monitor",
                     kwargs=json.dumps({"request_id": instance.id}),
-                    expires=instance.period_date
                 )
                 instance.task = task
                 instance.save()

@@ -1,3 +1,4 @@
+from datetime import datetime
 from datetime import timedelta
 
 from django.db.models.signals import pre_save
@@ -28,7 +29,7 @@ def update_request(sender, instance, **kwargs):
 
     if not instance._state.adding:
         weeks = timedelta(weeks=int(instance.period_weeks))
-        next_period = instance.period_date + weeks
+        next_period = datetime.now() + weeks
 
         instance.period_date = next_period
         PeriodicTask.objects.filter(pk=instance.task.pk).update(expires=next_period)
