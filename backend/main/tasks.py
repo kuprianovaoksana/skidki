@@ -129,7 +129,7 @@ def task_monitor(self, request_id):
         # print("Задача завершена")
         task_obj.enabled = False
         task_obj.save()
-        Request.objects.filter(pk=request_id).update(completed_at=completed_date, status=1)
+        Request.objects.filter(pk=request_id).update(completed_at=completed_date, status=1, period_week="0")
 
     try:
         product_obj = Product.objects.get(pk=request_obj.endpoint)
