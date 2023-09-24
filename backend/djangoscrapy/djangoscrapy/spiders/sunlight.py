@@ -57,10 +57,22 @@ class SunlightSpider(CrawlSpider):
                     brand = response.css(
                         "a.supreme-product-card-description__item-text::text"
                     ).get().strip()
+
+                    category = response.css(
+                        "a.span::text"
+                    ).get().strip()
                 except Exception as error:
                     print(f"AttributeError in {error} with {response.url}")
                 else:
-                    support = DataUpdate(title, current_price, url, shop, description, old_price, image, brand)
+                    support = DataUpdate(title,
+                                         current_price,
+                                         url,
+                                         shop,
+                                         description,
+                                         old_price,
+                                         image,
+                                         brand,
+                                         category)
                     support.add_product()
 
             yield {"url": response.url}

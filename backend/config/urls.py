@@ -13,6 +13,9 @@ router.register(r"product", viewsets.ProductViewSet)
 router.register(r"history", viewsets.ProductHistoryViewSet)
 router.register(r"request", viewsets.RequestViewSet)
 router.register(r"notify", viewsets.NotificationsViewSet)
+router.register(r"category", viewsets.CategoryViewSet)
+router.register(r"brand", viewsets.BrandViewSet)
+router.register(r"shop", viewsets.ShopViewSet)
 router.register(r"auth/users/me", viewsets.UserEmailChange)
 
 schema_view = swagger_get_schema_view(

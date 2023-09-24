@@ -103,6 +103,7 @@ def by_week():
     Функция `by_week` вызывает команду управления для запуска паука.
     """
     management.call_command('runspider')
+    send_email('admin@skidkalove.com', {'Паук запущен': 'Начинаем получать данные от парсера'})
 
 
 @shared_task(bind=True)
@@ -136,7 +137,7 @@ def task_monitor(self, request_id):
     except Exception as e:
         task_obj.enabled = False
         task_obj.save()
-        Request.objects.filter(pk=request_id).update(completed_at=completed_date, status=2)
+        Request.objects.filter(pk=request_id).update(completed_at=completed_date, status=2, period_week="0")
 
         print(str(e), type(e))
         # print("Товар не найден")

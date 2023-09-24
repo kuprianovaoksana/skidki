@@ -1,4 +1,5 @@
 from main.models import Product, ProductHistory
+from filter import Filter
 
 
 class DataUpdate:
@@ -7,7 +8,7 @@ class DataUpdate:
     продукта и добавление истории обновлений цен.
     """
 
-    def __init__(self, title, current_price, url, shop, description, old_price, image, brand):
+    def __init__(self, title, current_price, url, shop, description, old_price, image, brand, category):
         self.title = title
         self.shop = shop
         self.description = description
@@ -16,6 +17,7 @@ class DataUpdate:
         self.url = url
         self.image = image
         self.brand = brand
+        self.category = category
 
     def check_product_table(self):
         """
@@ -61,5 +63,10 @@ class DataUpdate:
                                          current_price=self.current_price,
                                          url=self.url,
                                          image=self.image,
-                                         brand=self.brand)
+                                         brand=self.brand,
+                                         category=self.category)
+
             ProductHistory.objects.create(product_id=obj, updated_price=self.current_price)
+
+            filter_obj = Filter(category=self.category, brand=self.brand, shop=self.shop)
+            filter_obj.filter_all()

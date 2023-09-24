@@ -2,9 +2,27 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from .models import Product, ProductHistory, Request, Notifications
+from .models import Category, Brand, Shop, Product, ProductHistory, Request, Notifications
 
 User = get_user_model()
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
+class BrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = '__all__'
+
+
+class ShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shop
+        fields = '__all__'
 
 
 class ProductSerializer(serializers.ModelSerializer):

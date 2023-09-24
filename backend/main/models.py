@@ -9,17 +9,28 @@ from .managers import UserManager
 
 # from config import settings  # FIXME FOR SERVER
 
+class Category(models.Model):
+    name = models.CharField('Наименование категории', max_length=64)
+
+
+class Brand(models.Model):
+    name = models.CharField('Наименование бренда', max_length=64)
+
+
+class Shop(models.Model):
+    name = models.CharField('Наименование магазина', max_length=64)
+
 
 class Product(models.Model):
     title = models.CharField('Наименование товара', max_length=64)
-    shop = models.CharField('Интернет-магазин', max_length=32, blank=True, null=True)
+    shop = models.CharField('Интернет-магазин', max_length=64, blank=True, null=True)
     description = models.CharField('Описание товара', max_length=5000, blank=True, null=True)
     old_price = models.CharField('Цена до скидки', max_length=32, blank=True, null=True)
     current_price = models.CharField('Цена со скидкой', max_length=32)
     url = models.URLField('URL товара', unique=True, primary_key=True)
     image = models.URLField('URL изображения', blank=True, null=True)
-    brand = models.CharField('Бренд', max_length=32, blank=True, null=True)
-    category = models.CharField('Категория', max_length=32, blank=True, null=True)
+    brand = models.CharField('Бренд', max_length=64, blank=True, null=True)
+    category = models.CharField('Категория', max_length=64, blank=True, null=True)
     click_rate = models.IntegerField('Рейтинг кликов', default=0, blank=True, null=True)
 
     def get_discount(self):
@@ -58,7 +69,7 @@ class Request(models.Model):
     discount = models.IntegerField('Желаемая скидка', blank=True, null=True)
     created_at = models.DateField('Дата создания запроса', auto_now_add=True)
     completed_at = models.DateField('Дата завершения запроса', default=None, blank=True, null=True)
-    period_weeks = models.CharField('Количество недель', default="3", max_length=3)
+    period_weeks = models.CharField('Количество недель', default="3", max_length=4)
     period_date = models.DateTimeField('Время отслеживания', auto_now_add=True)
     status = models.IntegerField('Статус запроса', choices=STATUS, default=0)
     freeze_task = models.BooleanField('Заморозить задачу', default=False)

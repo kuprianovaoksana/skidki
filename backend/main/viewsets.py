@@ -17,16 +17,53 @@ from djoser import utils
 from djoser.serializers import UidAndTokenSerializer
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 
-from .serializers import (ProductSerializer,
+from .serializers import (CategorySerializer,
+                          BrandSerializer,
+                          ShopSerializer,
+                          ProductSerializer,
                           ProductHistorySerializer,
                           RequestSerializer,
                           NotificationsSerializer,
                           UserEmailSerializer)
 
-from .models import Product, ProductHistory, Request, Notifications
+from .models import (Category,
+                     Brand,
+                     Shop,
+                     Product,
+                     ProductHistory,
+                     Request,
+                     Notifications)
+
 from config.settings import EMAIL_CHANGE_CONFIRM_URL
 
 User = get_user_model()
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [
+        'name',
+    ]
+
+
+class BrandViewSet(viewsets.ModelViewSet):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [
+        'name',
+    ]
+
+
+class ShopViewSet(viewsets.ModelViewSet):
+    queryset = Shop.objects.all()
+    serializer_class = ShopSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = [
+        'name',
+    ]
 
 
 class ProductViewSet(viewsets.ModelViewSet):
