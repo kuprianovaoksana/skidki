@@ -59,15 +59,11 @@
 		overflow: hidden;
 	}
 	&__multi-value {
-		display: inline-block;
+		display: none;
 		align-items: center;
 	}
 	&__multi-value__label {
-		display: inline;
-		&::after {
-			content: ',';
-			margin-right: 3px;
-		}
+		display: none;
 	}
 	&__multi-value__remove {
 		display: none;
@@ -104,48 +100,13 @@
 		@include fontRoboto(18, 24, 400);
 		border-radius:  0 0 5px 5px;
 		background-color: $colorInitial;
-		position: relative;
 		width: 100%;
 		position: absolute;
 		z-index: 100;
-		overflow-y: scroll;
-		scrollbar-width: none;
-		&::-webkit-scrollbar {
-			width: 100%;
-			border-radius: 0;
-		}
-		&::-webkit-scrollbar-thumb {
-			background: inherit;
-			border-radius: 0;
-			border: none;
-		}
-		&::-webkit-scrollbar-track {
-			max-height: 100%;
-			border-radius: 0;
-			background-color: initial;
-		}
 	}
 	&__menu-list {
 		display: flex;
 		flex-direction: column;
-		max-height: 314px;
-		// gap: 12px 0;
-		overflow-y: scroll;
-		&::-webkit-scrollbar {
-			width: 100%;
-			border-radius: 0;
-		}
-		&::-webkit-scrollbar-thumb {
-			background: inherit;
-			border-radius: 0;
-			border: none;
-		}
-		&::-webkit-scrollbar-track {
-			max-height: 100%;
-			border-radius: 0;
-			background-color: initial;
-		}
-		scrollbar-width: none;
 	}
 	&__option {
 		display: flex;
@@ -170,17 +131,18 @@
 		&::before {
 			content: '';
 			display: inline-block;
+			min-height: 16px;
+			min-width: 16px;
 			height: 16px;
 			width: 16px;
-			// border: 1px solid $strokeDark;
+			border: 2px solid $borderGrey;
 			border-radius: 2px;
-			margin: 4px 16px 4px 4px;
+			margin: 0 10px 0 0;
 		}
-		&:hover, &--is-selected {
-			&::before {
-				// border: 1px solid $strokeBlue;
-			}
-		}
+		// &:hover, &--is-selected {
+		// 	&::before {
+		// 	}
+		// }
 		&--is-selected {
 			&::before {
 				content: '\2713';
@@ -192,46 +154,6 @@
 	}
 }
 
-.customSelectError {
-	&__control {
-		// border-color: $strokeRed;
-		&:hover, &:focus, &:active,
-		&--is-focused {
-			// border: 1px solid $strokeRed;
-			// color: $iconRed;
-		}
-		&:hover .customSelectError__clear-indicator,
-		&--is-focused .customSelectError__clear-indicator {
-			// color: $iconRed;
-		}
-	}
-	&__clear-indicator {
-		&:hover {
-			// color: $strokeRed;
-		}
-	}
-	&__option {
-		&:hover, &--is-selected {
-			// color: $iconRed;
-		}
-	}
-}
-
-.selectCheckbox {
-	.customSelectError__option {
-		&:hover, &--is-selected {
-			&::before {
-				// border: 1px solid $strokeRed;
-			}
-		}
-	}
-}
-
-.selectYear {
-	.customSelect__menu-list {
-		max-height: 200px;
-	}
-}
 
 // container
 // group

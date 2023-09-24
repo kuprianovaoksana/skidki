@@ -15,6 +15,10 @@
 	font-family: "Inter-Regular";
 	src: url(./styles/fonts/Inter-Regular.ttf);
 }
+@font-face {
+	font-family: "icons";
+	src: url(./styles/fonts/iconsFont.woff);
+}
 
 html,
 body {

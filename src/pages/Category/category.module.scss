@@ -4,10 +4,36 @@
 .category {
 	@include width-height(100%);
 	background-color: $colorInitial;
-	padding: 40px 70px;
-	display: grid;
+	padding: 40px 70px 20px;
+	display: flex;
+	flex-direction: column;
 	&__path {
 		margin-bottom: 50px;
+	}
+	&__container {
+		display: flex;
+		gap: 30px;
+		margin-bottom: 27px;
+	}
+	&__goods {
+		@include width-height(100%);
+	}
+	&__sort {
+		@include flex-grid(flex, null, space-between, null,);
+		width: 100%;
+	}
+	&__up {
+		@include fontRoboto(20, 30, 400);
+		background-color: $colorWhite;
+		padding: 5px 10px;
+		border-radius: 10px;
+		display: flex;
+		align-self: flex-end;
+		width: fit-content;
+		@include blockCenter;
+		&::after {
+			margin-left: 10px;
+		}
 	}
 }
 .pathLink {

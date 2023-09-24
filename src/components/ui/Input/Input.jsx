@@ -10,8 +10,12 @@ export default function Input (props) {
 	let idNumber = Math.random();
 
 	const handleChange = (e) => {
-		// e.preventDefault();
-		setInputValue(e.target.value);
+		if(props.type === 'number'){
+			setInputValue(e.target.value.replace(/\D/g, ""));
+		} else {
+			setInputValue(e.target.value);
+		}
+		props.onChange(e);
 	}
 
 	const showPassword = (e) => {
@@ -26,7 +30,7 @@ export default function Input (props) {
 				htmlFor={`input${idNumber}`}>
 					{props.labelBefore}
 			</label>}
-				<div className={cn(s.field__box, {[s.field__box_error]: props.classError})}>
+				<div className={cn(s.field__box, {['icon_search1_after']: props.isSearch})}>
 					<input className={s.field__input}
 						id={`input${idNumber}`}
 						tabIndex={props.tabIndex}
@@ -37,10 +41,10 @@ export default function Input (props) {
 						placeholder={props.placeholder}
 						autoComplete={props.autoComplete || 'off'}
 						disabled={props.isDisabled}
-						onChange={props.onChange || handleChange}
+						onChange={handleChange}
 						onKeyDown={props.onKeyDown}
 						pattern={props.pattern}
-						{...(props.nameField ? {} : {value: inputValue})}
+						{...(props.nameField ? {} : {value: props.value || inputValue})}
 						defaultValue={props.defaultValue}
 						// {...(props.nameField ? {props.defaultValue: props.defaultValue} : {})}
 						{...(props.nameField ? {} : {ref: inputRef})}

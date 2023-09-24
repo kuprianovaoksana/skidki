@@ -4,10 +4,12 @@ const initialState = {
     loading: false,
     error: '',
     errorMessage: '',
-    allGoods: '',
+    allGoods: [],
     userGoods: '',
     goodsView: 'list',
-    goodsCategory: '',
+    shops: [],
+    categories: [],
+    brands: [],
 }
 
 export const goodsSlice = createSlice({
@@ -17,7 +19,7 @@ export const goodsSlice = createSlice({
         fetching: (state) => {
             state.loading = true;
         },
-        fetchSuccess: (state, action) => {
+        fetchGoodsSuccess: (state, action) => {
             state.loading = false;
             state.product = action.payload;
         },
@@ -28,6 +30,15 @@ export const goodsSlice = createSlice({
         fetchErrorMessage: (state, action) => {
             state.loading = false;
             state.errorMessage = action.payload;
+        },
+        fetchShopsSuccess: (state, action) => {
+            state.shops = action.payload;
+        },
+        fetchCategoriesSuccess: (state, action) => {
+            state.categories = action.payload;
+        },
+        fetchBrandsSuccess: (state, action) => {
+            state.brands = action.payload;
         },
         setProductCardViewTile: (state) => {
             state.goodsView = 'tile';

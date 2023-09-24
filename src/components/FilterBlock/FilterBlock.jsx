@@ -5,22 +5,64 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { getWantedProductRequest } from "../../store/actions/productAction";
 import Button from "../ui/Button/Button";
-import CustomLink from "../ui/Link/Link";
+import Input from "../ui/Input/Input";
 import exampleProduct from '../../assets/images/example_product.png'
+import CustomSelect from "../ui/CustomSelect/CustomSelect";
+import { selectBrand, selectCategory, selectPriceFrom, selectPriceTo, selectShop } from "../../store/slices/filters";
+import { notificationType, sortType } from "../../data/constans";
+import Filter from "./Filter";
 
 function FilterBlock() {
-	const { product } = useSelector(state => state.product);
+	const { shop, category, brand, priceFrom, priceTo } = useSelector(state => state.filters);
 	const dispatch = useDispatch();
-	const classPriceMove = product.current_price < product.old_price
-			? s.productDetail__pricemove_down : s.productDetail__pricemove;
-	const priceMove = product.current_price * 100 / product.old_price;
 
+	React.useEffect(() => {
+		console.log(shop, category, brand, priceFrom, priceTo)
+	},[shop, category, brand, priceFrom, priceTo]);
 
-	// const
+	const filtersParam = [
+		{
+			title: 'Магазин',
+			optionList: sortType,
+			onChange: (e) => dispatch(selectShop(e))
+		},
+		{
+			title: 'Категория',
+			optionList: notificationType,
+			onChange: (e) => dispatch(selectCategory(e))
+		},
+		{
+			title: 'Бренд',
+			optionList: notificationType,
+			onChange: (e) => dispatch(selectBrand(e))
+		},
+		{
+			title: 'Цена',
+			onChangeFrom: (e) => dispatch(selectPriceFrom(e.target.value)),
+			onChangeTo: (e) => dispatch(selectPriceTo(e.target.value))
+		},
+	]
+
+	const applyFilters = (e) => {
+		e.preventDefault();
+
+	}
+	const clearFilters = (e) => {
+		e.preventDefault();
+
+	}
 
 	return (
 		<div className={s.filterBlock}>
-
+			{filtersParam.map((item, index) => (
+				<Filter key={index} params={item} />
+			))}
+			<Button className={s.filterBlock__btnApply}
+				children={'Применить'}
+				onClick={applyFilters} />
+			<Button className={s.filterBlock__btnClear}
+				children={'Очистить'}
+				onClick={clearFilters} />
 		</div>
 	);
 };

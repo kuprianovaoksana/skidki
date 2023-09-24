@@ -1,0 +1,27 @@
+@import '../../../styles/variables';
+
+.ant-radio-button {
+	& + span {
+		@include fontRoboto(18, 24, 400);
+	}
+	&-checked {
+		&+ span {
+			@include fontRoboto(18, 24, 700);
+		}
+	}
+	&-wrapper {
+		padding: 0 10px;
+		&:first-child,
+		&:not(:first-child)::before,
+		&:not(&-checked),
+		&-checked:not(&-disabled),
+		&-checked:not(&-disabled):hover,
+		&-checked:not(&-disabled):first-child {
+			background: none;
+			border: none;
+			&::before {
+				background: none;
+			}
+		}
+	}
+}

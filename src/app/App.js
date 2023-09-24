@@ -5,7 +5,7 @@ import {Homepage} from '../pages/Homepage/Homepage/Homepage';
 import {NotFound} from '../pages/NotFound/NotFound';
 import Catalog from '../pages/Catalog/Catalog';
 import {Entrance} from '../pages/Entrance/Entrance';
-import {MyDiscount} from '../pages/MyDiscount/MyDiscount';
+import MyDiscount from '../pages/MyDiscount/MyDiscount';
 import {Notifications} from '../pages/Notifications/Notifications';
 import {Settings} from '../pages/Settings/Settings';
 import Product from '../pages/Product/Product';

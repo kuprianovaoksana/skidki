@@ -7,6 +7,8 @@ import { getWantedProductRequest } from "../../store/actions/productAction";
 import Button from "../ui/Button/Button";
 import CustomLink from "../ui/Link/Link";
 import exampleProduct from '../../assets/images/example_product.png'
+import RadioButton from "../ui/Radio/RadioButton";
+import { sortType } from "../../data/constans";
 
 function SortingBlock() {
 	const { product } = useSelector(state => state.product);
@@ -20,6 +22,7 @@ function SortingBlock() {
 
 	return (
 		<div className={s.sortingBlock}>
+			<RadioButton options={sortType} />
 		</div>
 	);
 };

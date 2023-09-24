@@ -9,24 +9,21 @@ import ProductTrackSettings from "../../components/ProductTrackSettings/ProductT
 import Reviews from "../../components/Reviews/Reviews";
 import { Goods } from "../../components/Goods/Goods";
 import Category from "../Category/Category";
+import PopupWindow from "../../components/ui/PopupWindow/PopupWindow";
 
 function Catalog() {
 	const dispatch = useDispatch();
-	const { product } = useSelector(state => state.product);
-
-	const {register, handleSubmit} = useForm({ mode: 'all' });
-
-	const onSubmit = (data, e) => {
-		e.preventDefault();
-		console.log(data);
-
-		dispatch(getWantedProductRequest(data));
-	}
+	const { windowInfo } = useSelector(state => state.statePopupWindow);
 
 	return (
 		<div className={s.catalog}>
+			{windowInfo &&
+				<PopupWindow className={s.catalog__noProduct}
+					isPopupAbsolute={false}
+					children={'Упс!  К сожалению, в данный момент мы не можем отследить данный товар. Но мы прилагаем максимум усилий, чтобы исправить эту ситуацию. А пока мы предлагаем вам поискать аналоги в нашем каталоге.'} />}
             <h2 className={s.catalog__title}>Каталог</h2>
-            
+			{/* Временно добавлен компонент Category, пока не будут реализованы разделы на бэке */}
+			<Category />
 		</div>
 	);
 };

@@ -30,11 +30,11 @@ export default function CustomSelect(props) {
 				onChange={props.onChange}
 				value={props.value}
 				hideSelectedOptions={false}
-				isSearchable={false}
+				isSearchable={props.isSearchable || false}
 				placeholder={props.placeholder}
 				isDisabled={props.isDisabled}
 				id={props.id}
-				// menuIsOpen='true'
+				menuIsOpen={props.menuIsOpen || false}
 				{...(props.isMulti ? {isMulti: true} : {})}
 				 />
 			{props.labelAfter &&

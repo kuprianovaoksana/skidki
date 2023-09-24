@@ -1,68 +1,69 @@
 @import '../../styles/variables.scss';
 @import '../ui/Button/style.module.scss';
 
-.productDetail {
-	display: grid;
-	max-width: 869px;
-	height: 732px;
-	grid-template-columns: minmax(320px, 400px) 20px minmax(300px, 409px);
-	grid-template-rows: 72px 71px 58px 71px 130px 20px 55px 75px 20px 120px;
-	grid-template-areas:
-		'photo . title title'
-		'photo . 	. 	.	'
-		'photo . price likes'
-		'photo . 	. 	.	'
-		'photo . chart chart'
-		'	. 	. chart chart'
-		'button . chart chart'
-		'	. 	. chart chart'
-		'	. 	. 	. 	.	'
-		'descr descr descr descr';
+.filterBlock {
+	@include flex-grid(flex, column, null, center);
 	background-color: $colorWhite;
-	border-radius: 10px;
-	padding: 20px;
-	&__photo {
-		grid-area: photo;
-		img {
-			width: 100%;
-		}
-
-	}
-	&__title {
-		grid-area: title;
-	}
-	&__price {
-		grid-area: price;
-	}
-	&__additionalInfo {
-		grid-area: likes;
-	}
-	&__priceChart {
-		grid-area: chart;
-	}
-	&__description {
-		grid-area: descr;
-	}
-	&__linkButton {
-		grid-area: button;
-		@extend .button_main;
-		@include textCenter;
+	width: 250px;
+	height: fit-content;
+	padding: 15px;
+	border-radius: 5px;
+	&__btnApply,
+	&__btnClear {
+		@extend .button_light;
+		@include width-height(154px, 54px);
 		border-radius: 5px;
+		margin-top: 20px;
 	}
-	&__pricemove {
-		&_down {
-			&::before {
-				rotate: 180deg;
-			}
-		}
-	}
-	&__likes {
-
+	&__btnClear {
+		@extend .button_main;
+		@include width-height(154px, 54px);
 	}
 }
 
-.priceChart {
+.filter {
 	&__title {
-		@include fontRoboto(24, 30, 500);
+		@include fontRoboto(20, 30, 500);
+	}
+	&__search {
+		background-color: $colorInitial;
+		@include width-height(100%, 40px);
+	}
+	&__checkbox {
+		@include fontRoboto(16, 19, 400);
+		gap: 10px;
+		margin: 15px 0 10px;
+		height: fit-content;
+		min-height: fit-content;
+		max-height: 135px;
+		overflow: hidden
+	}
+
+	&__fields {
+		@include blockCenter();
+	}
+	&__input {
+		background-color: $colorInitial;
+		width: 90px;
+		height: 40px;
+		@include fontRoboto(16, 19, 400, $colorTextBlack);
+		padding: 10px;
+		border-radius: 5px;
+	}
+	&__search{
+		&>div>input::placeholder {
+			@include fontRoboto(16, 19, 400, $colorTextBlack);
+		}
+	}
+	&__line {
+		height: 1px;
+		width: 10px;
+		background-color: $colorTextBlack;
+		margin: 5px;
+	}
+	&__showMore {
+		@include fontRoboto(16, 19, 400);
+		margin-bottom: 15px;
+		cursor: pointer;
 	}
 }
