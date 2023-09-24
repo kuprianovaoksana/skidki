@@ -3,7 +3,7 @@ This file is needed to remember what has changed.
 \skidki\Doc Leo\clean_up.py
 
 \backend\config\urls.py
-\backend\config\settings.py  # FIXME SET CORRECT CELERY TIMEZONE, SET PAGINATION API
+\backend\config\settings.py  # FIXME SET CORRECT CELERY TIMEZONE
 \backend\config\celery.py
 \backend\config\__init__.py
 
