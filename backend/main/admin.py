@@ -1,6 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from .models import Product, ProductHistory, Request, Notifications
+from .models import (Category,
+                     Brand,
+                     Shop,
+                     Product,
+                     ProductHistory,
+                     Request,
+                     Notifications)
 
 User = get_user_model()
 
@@ -14,3 +20,6 @@ admin.site.register(Product)
 admin.site.register(ProductHistory)
 admin.site.register(Request)
 admin.site.register(Notifications)
+admin.site.register(Category)
+admin.site.register(Brand)
+admin.site.register(Shop)

@@ -6,8 +6,8 @@ from django_celery_beat.models import PeriodicTask
 
 from .managers import UserManager
 
+from config import settings  # FIXME FOR SERVER
 
-# from config import settings  # FIXME FOR SERVER
 
 class Category(models.Model):
     name = models.CharField('Наименование категории', max_length=64)
@@ -62,7 +62,8 @@ class Request(models.Model):
     email_notification = models.BooleanField('Уведомление на почту', default=False)
     lk_notification = models.BooleanField('Уведомление в личном кабинете', default=False)
     notification_type = models.IntegerField('Тип уведомлений', choices=TYPE, default=0)
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')  # FIXME FOR SERVER
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                             related_name='user')  # FIXME FOR SERVER
 
     endpoint = models.URLField('Ссылка для отслеживания')
     price = models.IntegerField('Желаемая цена', blank=True, null=True)

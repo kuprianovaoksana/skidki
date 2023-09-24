@@ -103,7 +103,9 @@ def by_week():
     Функция `by_week` вызывает команду управления для запуска паука.
     """
     management.call_command('runspider')
-    send_email('admin@skidkalove.com', {'Паук запущен': 'Начинаем получать данные от парсера'})
+    send_email('jofeleonids00@gmail.com',
+               {"spider": 'Начинаем получать данные от парсера'},
+               'email/week_parsing.html')
 
 
 @shared_task(bind=True)

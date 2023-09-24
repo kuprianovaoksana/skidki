@@ -59,8 +59,8 @@ class SunlightSpider(CrawlSpider):
                     ).get().strip()
 
                     category = response.css(
-                        "a.span::text"
-                    ).get().strip()
+                        "div.supreme-product-card__header-breadcrumbs span::text"
+                    )[2].get().strip()
                 except Exception as error:
                     print(f"AttributeError in {error} with {response.url}")
                 else:

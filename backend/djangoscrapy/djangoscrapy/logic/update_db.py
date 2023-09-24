@@ -1,5 +1,5 @@
 from main.models import Product, ProductHistory
-from filter import Filter
+from .filter import Filter
 
 
 class DataUpdate:

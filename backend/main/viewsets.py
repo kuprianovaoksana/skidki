@@ -83,7 +83,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ProductHistoryViewSet(viewsets.ModelViewSet):
-    # permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
+    permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
     queryset = ProductHistory.objects.all()
     serializer_class = ProductHistorySerializer
     filter_backends = [DjangoFilterBackend]
@@ -95,12 +95,12 @@ class ProductHistoryViewSet(viewsets.ModelViewSet):
 
 
 class RequestViewSet(viewsets.ModelViewSet):
-    # permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
+    permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
     queryset = Request.objects.all()
     serializer_class = RequestSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = [
-        # 'user',  # FIXME FOR SERVER
+        'user',  # FIXME FOR SERVER
         'endpoint',
         'price',
         'discount',
@@ -148,10 +148,10 @@ class RequestViewSet(viewsets.ModelViewSet):
 
                 instance = serializer.save()
                 schedule, created = IntervalSchedule.objects.get_or_create(
-                    # every=2,  # FIXME FOR SERVER
-                    # period=IntervalSchedule.DAYS,  # FIXME FOR SERVER
-                    every=3,
-                    period=IntervalSchedule.SECONDS,
+                    every=2,  # FIXME FOR SERVER
+                    period=IntervalSchedule.DAYS,  # FIXME FOR SERVER
+                    # every=3,
+                    # period=IntervalSchedule.SECONDS,
                 )
 
                 task = PeriodicTask.objects.create(
@@ -183,7 +183,7 @@ class RequestViewSet(viewsets.ModelViewSet):
 
 
 class NotificationsViewSet(viewsets.ModelViewSet):
-    # permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
+    permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
     queryset = Notifications.objects.all()
     serializer_class = NotificationsSerializer
     filter_backends = [DjangoFilterBackend]
