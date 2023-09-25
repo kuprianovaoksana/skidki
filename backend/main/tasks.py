@@ -121,11 +121,11 @@ def task_monitor(self, request_id):
     request_obj = Request.objects.get(pk=request_id)
     task_obj = PeriodicTask.objects.get(name=request_obj.task.name)
 
-    datetime_format = '%Y-%m-%d %H:%M:%S'
+    # datetime_format = '%Y-%m-%d %H:%M:%S'
     date_format = '%Y-%m-%d'
 
-    current_time = datetime.strptime(datetime.now().strftime(datetime_format), datetime_format)
-    expiry_time = datetime.strptime(request_obj.period_date.strftime(datetime_format), datetime_format)
+    current_time = datetime.strptime(datetime.now().strftime(date_format), date_format)
+    expiry_time = datetime.strptime(request_obj.period_date.strftime(date_format), date_format)
     completed_date = datetime.strptime(datetime.now().strftime(date_format), date_format)
 
     if current_time > expiry_time:
