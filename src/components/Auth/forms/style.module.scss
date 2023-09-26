@@ -1,0 +1,47 @@
+@import '../../../styles/variables.scss';
+@import '../../ui/Button/style.module.scss';
+
+.form {
+	@include flex-grid(flex, column, null, null);
+	max-width: 400px;
+	margin: 0 auto;
+	gap: 20px;
+	&__title {
+		@include fontRoboto(20, 30, 500);
+	}
+	&__checkbox {
+		display: block;
+		padding: 4px 6px;
+	}
+	&__link {
+		margin: 0 auto;
+	}
+
+	&__field {
+		@include fontRoboto(18, 24, 400, $colorTextBlack);
+		&>div {
+			height: 50px;
+			padding: 0 15px;
+			@include borderStyle(1px solid $colorButton, 5px);
+			&>input {
+				@include fontRoboto(20, 20, 400);
+				&::placeholder {
+					@include fontRoboto(20, 20, 400, $colorTextPlaceholder);
+				}
+			}
+		}
+	}
+	&__btnSubmit {
+		@include fontRoboto(20, 20, 400, $colorTextWhite);
+		@extend .button_main;
+		@include width-height(250px, 50px);
+		border-radius: 5px;
+		margin: 10px auto 30px;
+		&:disabled {
+			@include width-height(250px, 50px);
+			@extend .button_light;
+			border-radius: 5px;
+			margin: 0 auto;
+		}
+	}
+}

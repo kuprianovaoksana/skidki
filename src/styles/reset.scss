@@ -17,9 +17,10 @@ ol, ul {
 	list-style: none;
 }
 
-a, a:hover, a:active, a:visited, a:any-link, input {
+a, a:hover, a:active, a:visited, a:any-link, a:-webkit-any-link, input {
 	text-decoration: none;
 	outline: none;
+	color: inherit;
 }
 
 table {

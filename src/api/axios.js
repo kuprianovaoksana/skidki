@@ -5,6 +5,7 @@ export default axios.create({
 
     headers: { 'accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': localStorage.authorizationToken || sessionStorage.authorizationToken
+                'Authorization': localStorage.authorizationTokenDiscountMan
+                || sessionStorage.authorizationTokenDiscountMan
              },
 });

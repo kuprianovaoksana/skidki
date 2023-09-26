@@ -1,0 +1,58 @@
+@import '../../styles/variables.scss';
+@import '../ui/Button/style.module.scss';
+
+
+.auth {
+	max-width: 560px;
+	&__description {
+		@include fontRoboto(24, 30, 400);
+		padding: 0 10px;
+		text-align: center;
+		&_under {
+
+		}
+	}
+	&__title {
+		@include fontRoboto(30, 40, 700);
+		@include blockCenter;
+		margin: 30px auto;
+	}
+	&__text {
+		@include fontRoboto(24, 30, 400);
+		text-align: center;
+	}
+	&__social {
+		display: flex;
+		justify-content: center;
+		gap: 30px;
+		margin: 20px 0 30px;
+	}
+	&__link {
+		@include fontRoboto(20, 20, 400);
+		text-align: center;
+		font-weight: 700;
+		&>strong {
+			text-decoration: underline;
+			text-transform: uppercase;
+			@include blockCenter;
+		}
+	}
+	&__description_under {
+		@include fontRoboto(16, 20, 400);
+		text-align: center;
+		padding: 0 55px;
+		&>a {
+			@include fontRoboto(16, 20, 700);
+			text-decoration: underline;
+		}
+	}
+	&__btn {
+		@include fontRoboto(16, 20, 700);
+		text-decoration: underline;
+		text-transform: uppercase;
+		background-color: $colorWhite;
+		display: flex;
+		margin: 20px auto 30px;
+		cursor: pointer;
+	}
+}

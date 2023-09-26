@@ -14,9 +14,11 @@
 		@include width-height(154px, 54px);
 		border-radius: 5px;
 		margin-top: 20px;
+		@include fontRoboto(20, 30, 500);
 	}
 	&__btnClear {
 		@extend .button_main;
+		color: $colorTextWhite;
 		@include width-height(154px, 54px);
 	}
 }

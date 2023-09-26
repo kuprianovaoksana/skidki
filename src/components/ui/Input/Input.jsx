@@ -50,7 +50,7 @@ export default function Input (props) {
 						{...(props.nameField ? {} : {ref: inputRef})}
 						{...props.register ? {...props.register(props.nameField, props.validation)} : ''} />
 					{props.type === 'password' &&
-						<button className={cn(s.field__password, 'icon_eye_password', {[s.field__password_show]: typeInput === 'text'} )}
+						<button className={cn(s.field__password, 'icon_eye', {[s.field__password_show]: typeInput === 'text'} )}
 							type={'button'}
 							onClick={showPassword} >
 							<img src="" alt="" />

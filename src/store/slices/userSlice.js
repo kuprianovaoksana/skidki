@@ -5,10 +5,11 @@ const initialState = {
     error: '',
     errorMessage: '',
     user: '',
+    userToken: localStorage.authorizationTokenDiscountMan || sessionStorage.authorizationTokenDiscountMan,
 }
 
-export const searchSlice = createSlice({
-    name: 'search',
+export const userSlice = createSlice({
+    name: 'user',
     initialState,
     reducers: {
         fetching: (state) => {
@@ -29,6 +30,6 @@ export const searchSlice = createSlice({
     }
 })
 
-export const { fetching, fetchSuccess, fetchError, fetchErrorMessage } = searchSlice.actions
+export const { fetching, fetchSuccess, fetchError, fetchErrorMessage } = userSlice.actions
 
-export default searchSlice.reducer
+export default userSlice.reducer

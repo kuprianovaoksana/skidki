@@ -23,6 +23,7 @@ function MyDiscount() {
         setBtnView(btnState)
     }
 
+    
 	return (
 		<div className={s.userDiscount}>
 			<div className={cn(s.userDiscount__buttons)}>
