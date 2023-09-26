@@ -10,7 +10,7 @@ from main import viewsets
 
 router = routers.DefaultRouter()
 router.register(r"product", viewsets.ProductViewSet)
-router.register(r"history", viewsets.ProductHistoryViewSet)
+# router.register(r"history", viewsets.ProductHistoryViewSet)
 router.register(r"request", viewsets.RequestViewSet)
 router.register(r"notify", viewsets.NotificationsViewSet)
 router.register(r"category", viewsets.CategoryViewSet)
@@ -35,6 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api-', include(router.urls)),
+    path('api-history/<str:url>/', viewsets.ProductHistoryViewSet.as_view()),
 
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),

@@ -6,7 +6,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.db import transaction
 from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework import status, viewsets, permissions
+from rest_framework import status, viewsets, permissions, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
@@ -70,6 +70,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
+    http_method_names = ['get']
     filterset_fields = [
         'title',
         'shop',
@@ -82,7 +83,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     ]
 
 
-class ProductHistoryViewSet(viewsets.ModelViewSet):
+class ProductHistoryViewSet(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
     queryset = ProductHistory.objects.all()
     serializer_class = ProductHistorySerializer
@@ -92,6 +93,17 @@ class ProductHistoryViewSet(viewsets.ModelViewSet):
         'last_updated',
         'updated_price',
     ]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user = self.request.user
+        url = self.kwargs.get('url', None)
+        queryset = queryset.filter(product_id__url=('http://' + url))
+
+        if isinstance(user, User):
+            return queryset
+
+        return queryset[0:3]
 
 
 class RequestViewSet(viewsets.ModelViewSet):
@@ -181,6 +193,11 @@ class RequestViewSet(viewsets.ModelViewSet):
             instance.task.delete()
         return super().perform_destroy(instance)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
 
 class NotificationsViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
@@ -191,6 +208,11 @@ class NotificationsViewSet(viewsets.ModelViewSet):
         'request',
         'created_at',
     ]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(request__user=self.request.user)
+        return queryset
 
 
 class UserEmailChange(viewsets.ModelViewSet):
