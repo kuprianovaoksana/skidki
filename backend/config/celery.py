@@ -13,7 +13,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'end_tracker_notification': {
         'task': 'main.tasks.time_end_notification',
-        'schedule': 5 # crontab(minute='0', hour='0'),
+        'schedule': crontab(minute='0', hour='0'),
     },
 }
 
