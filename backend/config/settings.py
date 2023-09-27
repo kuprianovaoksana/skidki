@@ -250,6 +250,9 @@ CELERY_BROKER_URL = f'redis://default:P2esA8YJJqVFjdW1kgGxl1jGSqmFgxEd' \
 CELERY_RESULT_BACKEND = f'redis://default:P2esA8YJJqVFjdW1kgGxl1jGSqmFgxEd' \
                         f'@redis-16433.c8.us-east-1-3.ec2.cloud.redislabs.com:16433'
 
+
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

@@ -85,7 +85,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ProductHistoryViewSet(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
+    permission_classes = [permissions.AllowAny]  # FIXME FOR SERVER
     queryset = ProductHistory.objects.all()
     serializer_class = ProductHistorySerializer
     # filter_backends = [DjangoFilterBackend]
@@ -99,7 +99,7 @@ class ProductHistoryViewSet(generics.ListAPIView):
         queryset = super().get_queryset()
         user = self.request.user
         url = self.request.GET.get('url', None)
-        queryset = queryset.filter(product_id__url=url)
+        queryset = queryset.filter(product_id__url=url).order_by('last_updated')
 
         if isinstance(user, User):
             return queryset
