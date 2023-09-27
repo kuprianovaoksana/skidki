@@ -35,7 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api-', include(router.urls)),
-    path('api-history/<str:url>/', viewsets.ProductHistoryViewSet.as_view()),
+    path('api-history/', viewsets.ProductHistoryViewSet.as_view()),
 
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),

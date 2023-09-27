@@ -9,6 +9,8 @@ class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def _create_user(self, username=None, first_name=None, last_name=None, email=None, password=None, **extra_fields):
+    # def _create_user(self, username=None, email=None, password=None,
+    #                  **extra_fields):
         """
         Создание пользователя
         """
@@ -38,6 +40,11 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(username=username, first_name=first_name, last_name=last_name,
                                  email=email, password=password, **extra_fields)
+
+    # def create_user(self, username=None, email=None, password=None, **extra_fields):
+    #     extra_fields.setdefault('is_superuser', False)
+    #     return self._create_user(username=username,
+    #                              email=email, password=password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_superuser', True)

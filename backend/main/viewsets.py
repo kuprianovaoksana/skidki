@@ -8,6 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import status, viewsets, permissions, generics
 from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.exceptions import APIException
 
@@ -87,18 +88,18 @@ class ProductHistoryViewSet(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]  # FIXME FOR SERVER
     queryset = ProductHistory.objects.all()
     serializer_class = ProductHistorySerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = [
-        'product_id',
-        'last_updated',
-        'updated_price',
-    ]
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = [
+    #     'product_id',
+    #     'last_updated',
+    #     'updated_price',
+    # ]
 
     def get_queryset(self):
         queryset = super().get_queryset()
         user = self.request.user
-        url = self.kwargs.get('url', None)
-        queryset = queryset.filter(product_id__url=('http://' + url))
+        url = self.request.GET.get('url', None)
+        queryset = queryset.filter(product_id__url=url)
 
         if isinstance(user, User):
             return queryset
