@@ -18,7 +18,7 @@ class Brand(models.Model):
 
 
 class Shop(models.Model):
-    name = models.CharField('Наименование магазина', max_length=64)
+    name = models.CharField('Наименование магазина', max_length=500)
 
 
 class Product(models.Model):
