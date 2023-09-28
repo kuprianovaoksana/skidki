@@ -8,9 +8,6 @@
 		@include fontRoboto(24, 30, 400);
 		padding: 0 10px;
 		text-align: center;
-		&_under {
-
-		}
 	}
 	&__title {
 		@include fontRoboto(30, 40, 700);
@@ -20,6 +17,8 @@
 	&__text {
 		@include fontRoboto(24, 30, 400);
 		text-align: center;
+		margin: 0;
+		width: 100%;
 	}
 	&__social {
 		display: flex;

@@ -9,21 +9,24 @@ import FilterBlock from "../../components/FilterBlock/FilterBlock";
 import ProductView from "../../components/ProductView/ProductView";
 import SortingBlock from "../../components/SortingBlock/SortingBlock";
 import Button from "../../components/ui/Button/Button";
+import { getGoodsRequest } from "../../store/actions/goodsAction";
 
 function MyDiscount() {
     const [btnView, setBtnView] = React.useState(true)
-	const { goodsView, goodsCategory, allGoods } = useSelector(state => state.goods);
+	const { goodsView, userGoods } = useSelector(state => state.goods);
+    const { userId } = useSelector(state => state.user);
 	const dispatch = useDispatch();
 
 	React.useEffect(() => {
 		console.log(goodsView)
+        dispatch(getGoodsRequest('?userId'))
 	},[goodsView]);
 
     const handleClick = (btnState) => {
         setBtnView(btnState)
     }
 
-    
+
 	return (
 		<div className={s.userDiscount}>
 			<div className={cn(s.userDiscount__buttons)}>
@@ -39,7 +42,8 @@ function MyDiscount() {
                 <ProductView />
             </div>
             <div className={s.userDiscount__goods}>
-                {allGoods.map((item) => (
+                {userGoods.length > 0 &&
+                userGoods.map((item) => (
                     <ProductCard productValues={item}
                         isCardBig={goodsView === 'list' ? true : false} />
                 ))}

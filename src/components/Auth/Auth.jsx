@@ -9,7 +9,7 @@ import Authorization from './Authorization';
 
 function Auth() {
 	const { windowAuth } = useSelector((state) => state.statePopupWindow);
-	const [ isAuthorizationForm, checkAuthorizationForm ] = React.useState(true);
+	const [ isAuthorizationForm, changeAuthorizationForm ] = React.useState(true);
 
 	return (
 		<>
@@ -23,14 +23,13 @@ function Auth() {
 							<strong className={s.auth}>Зарегистрироваться</strong>
 						</div>
 						{isAuthorizationForm
-						? <Authorization checkAuthorizationForm={checkAuthorizationForm} />
-						: <Register checkAuthorizationForm={checkAuthorizationForm} />}
+						? <Authorization changeAuthorizationForm={changeAuthorizationForm} />
+						: <Register changeAuthorizationForm={changeAuthorizationForm} />}
 						<div className={s.auth__description_under}>{'Продолжая, вы соглашаетесь с '}
 							<Link className={s.auth__link}>Условиями использования</Link>{' и '}
 							<Link className={s.auth__link}>Политикой конфиденциальности сервиса</Link>
 						</div>
 					</div>}
-
 				/>}
 		</>
 	);

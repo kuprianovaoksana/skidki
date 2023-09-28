@@ -1,18 +1,14 @@
 import api from "../../api/axios";
-import { fetchShopsSuccess, fetchErrorMessage, fetchCategoriesSuccess, fetchBrandsSuccess } from "../slices/filters";
+import { fetchShopsSuccess, fetchErrorMessage, fetchCategoriesSuccess, fetchBrandsSuccess, fetchGoodsSuccess } from "../slices/goodsSlice";
 
-export const getGoodsRequest = () => {
+export const getGoodsRequest = (param) => {
     return async (dispatch) => {
         try {
-            const response = await api.get(`/api-product/`);
-            dispatch(fetchShopsSuccess( response.data ));
+            const response = await api.get(`/api-product/${param ? `?${param}` : ''}`);
+            console.log(response);
+            dispatch(fetchGoodsSuccess( response.data.results ));
         } catch (message) {
             console.log('error', message);
-            if(message.response.statusText === "Unauthorized") {
-                localStorage.removeItem('authorizationToken');
-                window.location.href = '/authorization';
-                return;
-            }
             dispatch(fetchErrorMessage(message.message));
         }
     }
@@ -21,15 +17,10 @@ export const getGoodsRequest = () => {
 export const getShopsRequest = () => {
     return async (dispatch) => {
         try {
-            const response = await api.get(`/api-site/`);
-            dispatch(fetchShopsSuccess( response.data ));
+            const response = await api.get(`/api-shop/`);
+            dispatch(fetchShopsSuccess( response.data.results ));
         } catch (message) {
             console.log('error', message);
-            if(message.response.statusText === "Unauthorized") {
-                localStorage.removeItem('authorizationToken');
-                window.location.href = '/authorization';
-                return;
-            }
             dispatch(fetchErrorMessage(message.message));
         }
     }
@@ -39,14 +30,9 @@ export const getCategoriesRequest = () => {
     return async (dispatch) => {
         try {
             const response = await api.get(`/api-category/`);
-            dispatch(fetchCategoriesSuccess( response.data ));
+            dispatch(fetchCategoriesSuccess( response.data.results ));
         } catch (message) {
             console.log('error', message);
-            if(message.response.statusText === "Unauthorized") {
-                localStorage.removeItem('authorizationToken');
-                window.location.href = '/authorization';
-                return;
-            }
             dispatch(fetchErrorMessage(message.message));
         }
     }
@@ -56,14 +42,9 @@ export const getBrandsRequest = () => {
     return async (dispatch) => {
         try {
             const response = await api.get(`/api-brand/`);
-            dispatch(fetchBrandsSuccess( response.data ));
+            dispatch(fetchBrandsSuccess( response.data.results ));
         } catch (message) {
             console.log('error', message);
-            if(message.response.statusText === "Unauthorized") {
-                localStorage.removeItem('authorizationToken');
-                window.location.href = '/authorization';
-                return;
-            }
             dispatch(fetchErrorMessage(message.message));
         }
     }

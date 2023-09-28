@@ -1,5 +1,5 @@
 import api from "../../api/axios";
-// import { setErrorNotificationText, showErrorNotification } from '../slices/notification';
+import { showWindowAuth } from "../slices/windowStateSlice";
 
 export async function authorizationRequest (dispatch, data, isRememberData) {
 
@@ -14,10 +14,22 @@ export async function authorizationRequest (dispatch, data, isRememberData) {
 		})
 		.catch((message) => {
 			console.log('error', message);
-			if(typeof message.response.data === 'object'){
-				// dispatch(setErrorNotificationText(message.response.data.non_field_errors))
-            }
-			// dispatch(showErrorNotification(true));
+		})
+
+	return result
+}
+
+export async function registrationRequest (dispatch, data) {
+
+	const result = await api.post(`/auth/users/`, JSON.stringify(data))
+		.then((response) => {
+			console.log('response', response);
+			dispatch(showWindowAuth(false));
+
+			return response.data;
+		})
+		.catch((message) => {
+			console.log('error', message);
 		})
 
 	return result

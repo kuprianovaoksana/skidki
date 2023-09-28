@@ -1,39 +1,48 @@
 import React from "react";
 import cn from "classnames";
 import s from './style.module.scss';
-import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getWantedProductRequest } from "../../store/actions/productAction";
 import Button from "../ui/Button/Button";
-import Input from "../ui/Input/Input";
-import exampleProduct from '../../assets/images/example_product.png'
-import CustomSelect from "../ui/CustomSelect/CustomSelect";
 import { selectBrand, selectCategory, selectPriceFrom, selectPriceTo, selectShop } from "../../store/slices/filters";
-import { notificationType, sortType } from "../../data/constans";
 import Filter from "./Filter";
+import { getBrandsRequest, getCategoriesRequest, getGoodsRequest, getShopsRequest } from "../../store/actions/goodsAction";
+
+const transformToParams = (param, checkedParams, arrauValues) => {
+	let searchString = '';
+	checkedParams.map(item => {
+		searchString
+		? searchString += `&${param}=${arrauValues[item - 1].name}`
+		: searchString = `${param}=${arrauValues[item - 1].name}`
+	})
+	return searchString;
+};
 
 function FilterBlock() {
+	const { categories, brands, shops } = useSelector(state => state.goods);
 	const { shop, category, brand, priceFrom, priceTo } = useSelector(state => state.filters);
 	const dispatch = useDispatch();
 
 	React.useEffect(() => {
-		console.log(shop, category, brand, priceFrom, priceTo)
-	},[shop, category, brand, priceFrom, priceTo]);
+		dispatch(getCategoriesRequest());
+		dispatch(getBrandsRequest());
+		dispatch(getShopsRequest());
+
+	},[]);
 
 	const filtersParam = [
 		{
 			title: 'Магазин',
-			optionList: sortType,
+			optionList: shops.map(item => ({label: item.name, value: item.id})),
 			onChange: (e) => dispatch(selectShop(e))
 		},
 		{
 			title: 'Категория',
-			optionList: notificationType,
+			optionList: categories.map(item => ({label: item.name, value: item.id})),
 			onChange: (e) => dispatch(selectCategory(e))
 		},
 		{
 			title: 'Бренд',
-			optionList: notificationType,
+			optionList: brands.map(item => ({label: item.name, value: item.id})),
 			onChange: (e) => dispatch(selectBrand(e))
 		},
 		{
@@ -45,7 +54,16 @@ function FilterBlock() {
 
 	const applyFilters = (e) => {
 		e.preventDefault();
+		let searchParams = '';
+		const shopParams = transformToParams('shop', shop, shops );
+		const categoryParams = transformToParams('category', category, categories );
+		const brandParams = transformToParams('brand', brand, brands);
 
+		searchParams = shopParams;
+		searchParams ? searchParams += `&${categoryParams}` : searchParams = categoryParams;
+		searchParams ? searchParams	+= `&${brandParams}` : searchParams = brandParams;
+
+		dispatch(getGoodsRequest(searchParams));
 	}
 	const clearFilters = (e) => {
 		e.preventDefault();

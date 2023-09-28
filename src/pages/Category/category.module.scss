@@ -17,6 +17,22 @@
 	}
 	&__goods {
 		@include width-height(100%);
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+		&_list {
+			position: relative;
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
+			grid-template-rows: auto;
+			align-items: stretch;
+			gap: 30px;
+			height: 100%;
+		}
+		&_tile {
+			display: grid;
+			gap: 30px;
+		}
 	}
 	&__sort {
 		@include flex-grid(flex, null, space-between, null,);

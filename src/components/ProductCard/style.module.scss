@@ -2,21 +2,25 @@
 @import '../ui/Button/style.module.scss';
 
 .productCard {
+	position: relative;
 	display: grid;
 	background-color: $colorWhite;
 	border-radius: 10px;
 	padding: 15px;
-	@include width-height(250px, 430px);
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 220px 20px 60px 20px 30px 20px 30px;
-		grid-template-areas:
-			'i i'
-			'. .'
-			't t'
-			'. .'
-			'p o'
-			'. .'
-			'b b';
+	width: 250px;
+	height: 100%;
+	align-items: stretch;
+	justify-content: stretch;
+	grid-template-columns: 50% 50%;
+	grid-template-rows: 220px 20px minmax(auto, auto) 20px 30px 20px 30px;
+	grid-template-areas:
+		'i i'
+		'. .'
+		't t'
+		'. .'
+		'p o'
+		'. .'
+		'b b';
 	&_bigView {
 		@include width-height(100%, 250px);
 		grid-template-columns: 220px 30px fit-content(75px) 1fr 30px 140px 110px;
@@ -34,9 +38,9 @@
 			'i . . . . o o'
 			'i . l . . o o'
 			'i . l . . . .'
-			'i . l . . b b'
-			'i . . . . b b'
-			'i . d a . b b'
+			'i . l . . . b'
+			'i . . . . . b'
+			'i . d a . . b'
 			'i . d a . . .'
 			'i . d a . . .';
 	}
@@ -52,17 +56,40 @@
 	}
 	&__price {
 		grid-area: p;
-		@include fontRoboto(30, 40, 700);
+		@include fontRoboto(30, 30, 700);
+		align-items: center;
+		display: flex;
+		&::after {
+			content: '\20BD';
+			margin-left: 5px;
+		}
+		&_end {
+			// margin: 0;
+			justify-content: flex-end;
+		}
 	}
 	&__oldPrice {
 		grid-area: o;
-		@include fontRoboto(20, 30, 700, $colorLightgray);
+		@include fontRoboto(20, 30, 700, $colorTextGreyLight);
 		text-decoration: line-through;
+		margin: 0 auto;
+		display: flex;
+		&::after {
+			content: '\20BD';
+			margin-left: 5px;
+		}
+		&_end {
+			margin: 0;
+			justify-content: flex-end;
+		}
 	}
 	&__likes {
 		grid-area: l;
 		@include fontRoboto(20, 30, 500);
+		display: flex;
+		align-items: center;
 		&::before {
+			margin-right: 5px;
 			color: $colorPink;
 		}
 	}
@@ -85,6 +112,8 @@
 		@extend .button_main;
 		@include textCenter;
 		border-radius: 5px;
+		@include fontRoboto(18, 24, 700, $colorWhite);
+		// justify-content: end;
 	}
 
 }

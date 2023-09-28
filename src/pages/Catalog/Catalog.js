@@ -1,13 +1,7 @@
 import React from "react";
 import cn from "classnames";
-import s from './catalog.module.scss'
-import { useForm } from "react-hook-form";
+import s from './catalog.module.scss';
 import { useDispatch, useSelector } from "react-redux";
-import { getWantedProductRequest } from "../../store/actions/productAction";
-import ProductDetail from "../../components/ProductDetail/ProductDetail";
-import ProductTrackSettings from "../../components/ProductTrackSettings/ProductTrackSettings";
-import Reviews from "../../components/Reviews/Reviews";
-import { Goods } from "../../components/Goods/Goods";
 import Category from "../Category/Category";
 import PopupWindow from "../../components/ui/PopupWindow/PopupWindow";
 

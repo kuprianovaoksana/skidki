@@ -21,7 +21,7 @@ export const goodsSlice = createSlice({
         },
         fetchGoodsSuccess: (state, action) => {
             state.loading = false;
-            state.product = action.payload;
+            state.allGoods = action.payload;
         },
         fetchError: (state, action) => {
             state.loading = false;
@@ -49,6 +49,6 @@ export const goodsSlice = createSlice({
     }
 });
 
-export const { fetching, fetchSuccess, fetchError, fetchErrorMessage, setProductCardViewTile, setProductCardViewList } = goodsSlice.actions
+export const { fetching, fetchGoodsSuccess, fetchError, fetchErrorMessage, setProductCardViewTile, setProductCardViewList, fetchCategoriesSuccess, fetchShopsSuccess, fetchBrandsSuccess } = goodsSlice.actions
 
 export default goodsSlice.reducer

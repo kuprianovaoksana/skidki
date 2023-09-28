@@ -20,7 +20,7 @@
     inset-inline-start: 0;
     margin: -5px;
 }
-//tooltip
+
 :where(.css-dev-only-do-not-override-1vr7spz).ant-tooltip .ant-tooltip-inner {
     min-width: 20px;
     min-height: 12px;
@@ -34,7 +34,6 @@
 :where(.css-dev-only-do-not-override-1vr7spz).ant-tooltip .ant-tooltip-arrow:before {
     content: none;
 }
-//mark
 
 :where(.css-dev-only-do-not-override-1vr7spz).ant-slider .ant-slider-mark-text {
     @include fontRoboto(10, 14, 400, transparent);
@@ -56,9 +55,6 @@
     background-color: transparent;
     border: none;
 }
-// :where(.css-dev-only-do-not-override-1vr7spz).ant-slider:hover .ant-slider-mark-text {
-//     color: $colorTextGreyLight;
-// }
 
 .range_percent {
     & .ant-tooltip-inner {

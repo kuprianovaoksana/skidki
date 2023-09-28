@@ -5,7 +5,7 @@ import cn from "classnames";
 import Icon from '../ui/Icon/Icon';
 import FormAuthorization from './forms/FormAuthorization';
 
-function Authorization({checkAuthorizationForm}) {
+function Authorization({changeAuthorizationForm}) {
 
 	return (
 		<>
@@ -25,7 +25,7 @@ function Authorization({checkAuthorizationForm}) {
 			</div>
 			<div className={s.auth__text}>Еще не зарегистрированы?</div>
 			<button className={s.auth__btn}
-				onClick={() => checkAuthorizationForm(true)}>РЕГИСТРАЦИЯ</button>
+				onClick={() => changeAuthorizationForm(false)}>РЕГИСТРАЦИЯ</button>
 		</>
 	);
 };

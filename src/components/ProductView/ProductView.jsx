@@ -9,10 +9,6 @@ function ProductView() {
 	const dispatch = useDispatch();
 	const classStyle = goodsView === 'list' ? s.viewBtn_list : s.viewBtn_tile;
 
-	// React.useEffect(() => {
-	// 	console.log(goodsView)
-	// },[goodsView]);
-
 	const handleClick = () => {
 		goodsView === 'list'
 		? dispatch(setProductCardViewTile())
@@ -21,8 +17,7 @@ function ProductView() {
 
 	return (
 		<button className={cn(s.viewBtn, classStyle)}
-			onClick={handleClick}
-			/>
+			onClick={handleClick} />
 	);
 };
 

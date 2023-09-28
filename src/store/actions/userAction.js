@@ -1,5 +1,5 @@
 import api from "../../api/axios";
-import { fetchError, fetchErrorMessage, fetchSuccess, fetching } from "../slices/searchSlice";
+import { fetchErrorMessage, fetchSuccess, fetching } from "../slices/searchSlice";
 
 
 export const getWantedProductRequest = (url) => {
@@ -10,11 +10,6 @@ export const getWantedProductRequest = (url) => {
             dispatch(fetchSuccess( response.data ));
         } catch (message) {
             console.log('error', message);
-            if(message.response.statusText === "Unauthorized") {
-                localStorage.removeItem('authorizationToken');
-                window.location.href = '/authorization';
-                return;
-            }
 
             dispatch(fetchErrorMessage(message.message));
         }

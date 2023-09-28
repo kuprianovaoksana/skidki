@@ -34,7 +34,7 @@ export default function CustomSelect(props) {
 				placeholder={props.placeholder}
 				isDisabled={props.isDisabled}
 				id={props.id}
-				menuIsOpen={props.menuIsOpen || false}
+				menuIsOpen={props.menuIsOpen}
 				{...(props.isMulti ? {isMulti: true} : {})}
 				 />
 			{props.labelAfter &&

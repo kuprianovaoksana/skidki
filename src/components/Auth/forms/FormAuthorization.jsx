@@ -5,37 +5,20 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Button from "../../ui/Button/Button";
-const FormAuthorization = ({}) => {
-		// const [price, setPrice] = React.useState(productPrice)
-	// const { product } = useSelector(state => state.product);
+import CheckboxGroup from "../../ui/Checkbox/Checkbox";
 
+const FormAuthorization = ({}) => {
 	const dispatch = useDispatch();
-	const {register, setValue, handleSubmit, watch} = useForm({ mode: 'all',
+	const {register, setValue, handleSubmit, watch} = useForm({
+		mode: 'all',
 		defaultValues: {
-			email: true,
-			name: '',
-			lastname: '',
-			password: 0,
-			password_repeat: 0,
-			period_date: 1,
-			remember: false,
+			isRemember: false,
 		},
 	});
 
-	const [ discountWatch, waitTimeWatch ] = watch(['discount', 'period_date']);
-
 	React.useEffect(() => {
-		// register fields
-		register('remember');
 
-			return () => {
-
-			}
 	}, []);
-
-	React.useEffect(() => {
-
-	}, [discountWatch]);
 
 	const onSubmit = (data, e) => {
 		e.preventDefault();
@@ -50,19 +33,22 @@ const FormAuthorization = ({}) => {
 			<Input className={s.form__field}
 				placeholder={"name@example.com"}
 				labelBefore={'Электронная почта'}
-				nameField={'name'}
+				nameField={'email'}
 				setValue={setValue}
 				register={register} />
 			<Input className={s.form__field}
 				placeholder={'Минимум 5 символов'}
 				labelBefore={'Введите пароль'}
-				nameField={'name'}
+				nameField={'password'}
 				setValue={setValue}
 				register={register}
 				type={'password'} />
-			<Link className={s.form__link} to="#">
+			<CheckboxGroup className={s.form__checkbox}
+				options={[{label: 'Запомнить пароль', value: 'isRemember'}]}
+				onChange={(e) => setValue('isRemember', e[0] ? true : false)} />
+			{/* <Link className={s.form__link} to="#">
 				Забыли пароль
-			</Link>
+			</Link> */}
 			<Button className={s.form__btnSubmit} type="submit">Войти</Button>
 		</form>
 	);

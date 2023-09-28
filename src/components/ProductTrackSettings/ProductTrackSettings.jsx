@@ -3,9 +3,6 @@ import cn from "classnames";
 import s from './style.module.scss';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getWantedProductRequest } from "../../store/actions/productAction";
-import Input from "../ui/Input/Input";
-import { Slider } from "antd";
 import CustomSelect from "../ui/CustomSelect/CustomSelect";
 import Range from "../ui/Range/Range";
 import { notificationPlace, notificationType } from "../../data/constans";
@@ -15,12 +12,13 @@ const formatter = (value) => value === 1
 							? `${value} недели` : `${value} недель`;
 
 function ProductTrackSettings() {
-	const productPrice = 1000
+	const productPrice = 1000;
 	const [price, setPrice] = React.useState(productPrice)
 	const { product } = useSelector(state => state.product);
 
 	const dispatch = useDispatch();
-	const {register, setValue, handleSubmit, watch} = useForm({ mode: 'all',
+	const {register, setValue, handleSubmit, watch} = useForm({
+		mode: 'all',
 		defaultValues: {
 			email_notification: true,
 			lk_notification: false,
@@ -32,25 +30,14 @@ function ProductTrackSettings() {
 		},
 	});
 
-	const [ discountWatch, waitTimeWatch ] = watch(['discount', 'period_date']);
-
 	React.useEffect(() => {
-
 		// register fields
 		register('email_notification');
 		register('lk_notification');
 		register('endpoint');
 		register('price');
 		register('period_date');
-
-			return () => {
-
-			}
 	}, []);
-
-	// React.useEffect(() => {
-
-	// }, [discountWatch]);
 
 	const onSubmit = (data, e) => {
 		e.preventDefault();

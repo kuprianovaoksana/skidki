@@ -4,7 +4,6 @@
 	position: relative;
 	@include fontRoboto(16, 19, 400);
 	@include width-height(100%);
-	// padding: 10px;
 	&__box {
 		@include width-height(100%);
 		@include blockCenter;

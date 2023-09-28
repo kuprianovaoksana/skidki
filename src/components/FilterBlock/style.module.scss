@@ -30,14 +30,20 @@
 	&__search {
 		background-color: $colorInitial;
 		@include width-height(100%, 40px);
+		padding: 10px;
+		&>div>input {
+			@include fontRoboto(16, 19, 400);
+		}
 	}
 	&__checkbox {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
 		@include fontRoboto(16, 19, 400);
 		gap: 10px;
 		margin: 15px 0 10px;
 		height: fit-content;
 		min-height: fit-content;
-		max-height: 135px;
 		overflow: hidden
 	}
 
