@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_filters',
     'drf_spectacular',
+    'corsheaders',
 
     'djangoscrapy',
     'main',
