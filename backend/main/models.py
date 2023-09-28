@@ -22,11 +22,11 @@ class Shop(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField('Наименование товара', max_length=64)
-    shop = models.CharField('Интернет-магазин', max_length=64, blank=True, null=True)
+    title = models.CharField('Наименование товара', max_length=500)
+    shop = models.CharField('Интернет-магазин', max_length=500, blank=True, null=True)
     description = models.CharField('Описание товара', max_length=5000, blank=True, null=True)
-    old_price = models.CharField('Цена до скидки', max_length=32, blank=True, null=True)
-    current_price = models.CharField('Цена со скидкой', max_length=32)
+    old_price = models.CharField('Цена до скидки', max_length=64, blank=True, null=True)
+    current_price = models.CharField('Цена со скидкой', max_length=64)
     url = models.URLField('URL товара', unique=True, primary_key=True)
     image = models.URLField('URL изображения', blank=True, null=True)
     brand = models.CharField('Бренд', max_length=64, blank=True, null=True)
