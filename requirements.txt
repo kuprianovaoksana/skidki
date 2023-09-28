@@ -24,3 +24,4 @@ django-filter==23.2
 gevent==23.9.0.post1
 python-dotenv==1.0.0
 drf-spectacular==0.26.4
+django-cors-headers==2.5.0
