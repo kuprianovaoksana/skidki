@@ -1,10 +1,14 @@
+import { useDispatch, useSelector } from 'react-redux';
+import Search from '../../../components/Search/Search';
 import css from './header.module.scss';
 import {NavLink} from "react-router-dom";
-// import {useNavigate} from 'react-router-dom';
-
-const isAuth = false;
+import { showWindowAuth } from '../../../store/slices/windowStateSlice';
+import { logoutRequest } from '../../../store/actions/authorizationAction';
 
 const Header = () => {
+    const { userToken } = useSelector(state => state.user)
+    const dispatch = useDispatch();
+
     return (
         <header className={css.header}>
             <div className={css.logo_menu}>
@@ -43,33 +47,29 @@ const Header = () => {
                             <div>Настройки</div>
                         </div>
                     </NavLink>
-                    {
-                        isAuth === false ?
-                        <NavLink to='/entrance' className={css.MenuLink}>
-                            <div className={css.MenuIcon}>
-                                <div className={css.icon_active}><img src="/images/icons/entrance-icon.svg" alt=''/></div>
-                                <div className={css.icon}><img src="/images/icons/entrance-icon-active.svg" alt=''/></div>
-                                <div>Вход</div>
-                            </div>
-                        </NavLink>
-                        :
-                        <NavLink to='/entrance' className={css.MenuLink}>
+                    {userToken ?
+                        <NavLink to='/' className={css.MenuLink}
+                            onClick={() => dispatch(logoutRequest())}>
                             <div className={css.MenuIcon}>
                                 <div className={css.icon_active}><img src="/images/icons/exit-icon.svg" alt=''/></div>
                                 <div className={css.icon}><img src="/images/icons/exit-icon.svg" alt=''/></div>
                                 <div>Выход</div>
                             </div>
                         </NavLink>
+                        :
+                        <NavLink to='/' className={css.MenuLink}
+                            onClick={() => dispatch(showWindowAuth(true))}>
+                            <div className={css.MenuIcon}>
+                                <div className={css.icon_active}><img src="/images/icons/entrance-icon.svg" alt=''/></div>
+                                <div className={css.icon}><img src="/images/icons/entrance-icon-active.svg" alt=''/></div>
+                                <div>Вход</div>
+                            </div>
+                        </NavLink>
+
                     }
                 </nav>
-            </div>            
-            <div className={css.search}>
-                <div>
-                    <input className={css.input} placeholder="Введите ссылку на товар"/>
-                    <div><img src="/images/loupe.png" alt=""/></div>
-                </div>
-                <button className={css.button}>Следить</button>
             </div>
+            <Search />
         </header>
     );
 }

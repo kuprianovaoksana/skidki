@@ -1,0 +1,77 @@
+@import '../../styles/variables.scss';
+@import '../ui/Button/style.module.scss';
+
+.filterBlock {
+	@include flex-grid(flex, column, null, center);
+	background-color: $colorWhite;
+	width: 250px;
+	height: fit-content;
+	padding: 15px;
+	border-radius: 5px;
+	&__btnApply,
+	&__btnClear {
+		@extend .button_light;
+		@include width-height(154px, 54px);
+		border-radius: 5px;
+		margin-top: 20px;
+		@include fontRoboto(20, 30, 500);
+	}
+	&__btnClear {
+		@extend .button_main;
+		color: $colorTextWhite;
+		@include width-height(154px, 54px);
+	}
+}
+
+.filter {
+	&__title {
+		@include fontRoboto(20, 30, 500);
+	}
+	&__search {
+		background-color: $colorInitial;
+		@include width-height(100%, 40px);
+		padding: 10px;
+		&>div>input {
+			@include fontRoboto(16, 19, 400);
+		}
+	}
+	&__checkbox {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		@include fontRoboto(16, 19, 400);
+		gap: 10px;
+		margin: 15px 0 10px;
+		height: fit-content;
+		min-height: fit-content;
+		overflow: hidden
+	}
+
+	&__fields {
+		@include blockCenter();
+	}
+	&__input {
+		background-color: $colorInitial;
+		width: 90px;
+		height: 40px;
+		@include fontRoboto(16, 19, 400, $colorTextBlack);
+		padding: 10px;
+		border-radius: 5px;
+	}
+	&__search{
+		&>div>input::placeholder {
+			@include fontRoboto(16, 19, 400, $colorTextBlack);
+		}
+	}
+	&__line {
+		height: 1px;
+		width: 10px;
+		background-color: $colorTextBlack;
+		margin: 5px;
+	}
+	&__showMore {
+		@include fontRoboto(16, 19, 400);
+		margin-bottom: 15px;
+		cursor: pointer;
+	}
+}

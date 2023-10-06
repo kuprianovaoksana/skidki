@@ -1,0 +1,45 @@
+@import '../../../styles/variables';
+
+.window {
+	&_relative {
+		position: relative;
+	}
+	&_absolute {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 100;
+	}
+	@include width-height(100%);
+	background: linear-gradient($colorBackgroundFill, $colorBackgroundFill,);
+	display: flex;
+	align-items: center;
+	overflow: auto;
+	&::-webkit-scrollbar {
+		width: 0;
+	}
+	&__container {
+		box-sizing: border-box;
+		position: relative;
+		@include flex-grid(flex, column, center, center);
+		background-color: $colorWhite;
+		border-radius: 10px;
+		margin: auto;
+		padding: 20px;
+	}
+	&__close {
+		align-self: flex-end;
+		padding: 5px;
+		background: none;
+		border: none;
+		margin-bottom: 20px;
+		cursor: pointer;
+		&::before {
+			font-size: 24px;
+			color: $colorButton;
+		}
+	}
+	&__children {
+		@include width-height(100%);
+	}
+}

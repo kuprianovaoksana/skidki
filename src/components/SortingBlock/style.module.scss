@@ -1,0 +1,6 @@
+@import '../../styles/variables.scss';
+@import '../ui/Button/style.module.scss';
+
+.sortingBlock {
+	@include blockCenter;
+}

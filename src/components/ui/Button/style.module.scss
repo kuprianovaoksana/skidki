@@ -1,0 +1,15 @@
+@import '../../../styles/variables.scss';
+
+.button {
+	cursor: pointer;
+	&_light {
+		@extend .button;
+		color: $colorButton;
+		background-color: $colorVioletHighlight;
+	}
+	&_main {
+		@extend .button;
+		background-color: $colorButton;
+		color: $colorTextWhite;
+	}
+}

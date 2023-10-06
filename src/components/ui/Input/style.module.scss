@@ -1,0 +1,28 @@
+@import '../../../styles/variables.scss';
+
+.field {
+	position: relative;
+	@include fontRoboto(16, 19, 400);
+	@include width-height(100%);
+	&__box {
+		@include width-height(100%);
+		@include blockCenter;
+
+	}
+	&__input {
+		@include width-height(100%);
+		background-color: transparent;
+	}
+	&__password {
+		background-color: $colorWhite;
+		padding: 12px;
+		&::before {
+			color: $colorTextPlaceholder;
+		}
+		&_show {
+			&::before {
+				color: $colorButton;
+			}
+		}
+	}
+}

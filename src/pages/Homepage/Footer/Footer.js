@@ -16,11 +16,11 @@ const Footer = () => {
                 </nav>
             </div>
             <div className={css.footer_right_container}>
-                <div><p class="mail">skidkoman@gmail.com</p></div>
+                <div><p className="mail">skidkoman@gmail.com</p></div>
                 <div className={css.agreement}>
                     <a href="/agreement.html" target="_blank">Согласие на обработку персональных данных</a>
                     <a href="/policy.html" target="_blank">Политика в отношении обработки персональных данных</a>
-                </div> 
+                </div>
             </div>
         </footer>
     );

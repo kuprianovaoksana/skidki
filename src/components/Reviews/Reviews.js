@@ -1,7 +1,14 @@
-const Reviews = ()=> {
-    return(
-        <div>Отзывы</div>
-    );
-}
+import React from "react";
+import cn from "classnames";
+import s from './style.module.scss';
 
-export {Reviews}
+function Reviews() {
+
+	return (
+		<div className={s.reviews}>
+
+		</div>
+	);
+};
+
+export default Reviews;
